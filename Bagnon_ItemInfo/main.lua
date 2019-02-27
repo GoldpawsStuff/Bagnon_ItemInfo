@@ -75,13 +75,11 @@ end)
 -- Update our secret scanner tooltip with the current button
 local RefreshScanner = function(button)
 	local bag, slot = button:GetBag(), button:GetID()
-	if (ScannerTip.bag ~= bag) or (ScannerTip.slot ~= slot) then 
-		ScannerTip.owner = button
-		ScannerTip.bag = bag
-		ScannerTip.slot = slot
-		ScannerTip:SetOwner(button, "ANCHOR_NONE")
-		ScannerTip:SetBagItem(button:GetBag(), button:GetID())
-	end 
+	ScannerTip.owner = button
+	ScannerTip.bag = bag
+	ScannerTip.slot = slot
+	ScannerTip:SetOwner(button, "ANCHOR_NONE")
+	ScannerTip:SetBagItem(button:GetBag(), button:GetID())
 end
 
 local IsItemBound = function(button)
