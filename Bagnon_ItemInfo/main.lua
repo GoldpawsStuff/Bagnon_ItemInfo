@@ -230,8 +230,8 @@ local Update = function(self)
 		if (itemRarity and (itemRarity > 1)) and ((bindType == 2) or (bindType == 3)) and (not IsItemBound(self)) then
 			local ItemBind = Cache_ItemBind[self] or Cache_GetItemBind(self)
 			local r, g, b = GetItemQualityColor(itemRarity)
-			ItemBind[self]:SetTextColor(r * 2/3, g * 2/3, b * 2/3)
-			ItemBind[self]:SetText((bindType == 3) and L["BoU"] or L["BoE"])
+			ItemBind:SetTextColor(r * 2/3, g * 2/3, b * 2/3)
+			ItemBind:SetText((bindType == 3) and L["BoU"] or L["BoE"])
 		else 
 			if Cache_ItemBind[self] then 
 				Cache_ItemBind[self]:SetText("")
