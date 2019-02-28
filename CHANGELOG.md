@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.4-Release] 2019-02-28
+### Fixed
+- Fixed an issue that sometimes could cause an "ambigous syntax" error. 
+
 ## [1.0.3-Release] 2019-02-28
 ### Added
 - Added a purple eye to indicate items with uncollected transmog appearances. 
