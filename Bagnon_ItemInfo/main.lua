@@ -31,6 +31,8 @@ local S_ITEM_BOUND2 = _G.ITEM_ACCOUNTBOUND
 local S_ITEM_BOUND3 = _G.ITEM_BNETACCOUNTBOUND
 local S_ITEM_LEVEL = "^" .. string_gsub(_G.ITEM_LEVEL, "%%d", "(%%d+)")
 local S_CONTAINER_SLOTS = "^" .. string_gsub(string_gsub(_G.CONTAINER_SLOTS, "%%d", "(%%d+)"), "%%s", "(%.+)")
+local S_TRANSMOGRIFY_STYLE_UNCOLLECTED = _G.TRANSMOGRIFY_STYLE_UNCOLLECTED
+local S_TRANSMOGRIFY_TOOLTIP_APPEARANCE_UNKNOWN = _G.TRANSMOGRIFY_TOOLTIP_APPEARANCE_UNKNOWN
 
 -- Localization. 
 -- *Just enUS so far. 
@@ -247,30 +249,20 @@ local Update = function(self)
 		-- Uncollected Appearance
 		---------------------------------------------------
 		if (itemRarity and itemRarity > 1) and (not C_TransmogCollection.PlayerHasTransmog(itemID)) then 
-			local appearanceID, sourceID = C_TransmogCollection.GetItemInfo(itemID)
-			local data = sourceID and C_TransmogCollection.GetSourceInfo(sourceID)
-			if (itemRarity and itemRarity > 1) and (data and not data.isCollected) then
-				-- figure out if we own a matching item
-				local known
-				local sources = C_TransmogCollection.GetAppearanceSources(appearanceID)
-				if sources then 
-					for i = 1, #sources do 
-						local data = C_TransmogCollection.GetSourceInfo(sources[i].sourceID) 
-						if (data and data.isCollected) then 
-							-- found a collected matching source
-							known = true 
-							break
-						end 
+			local unknown
+			for i = ScannerTip:NumLines(),2,-1 do 
+				local line = _G[ScannerTipName.."TextLeft"..i]
+				if line then 
+					local msg = line:GetText()
+					if msg and (string_find(msg, TRANSMOGRIFY_STYLE_UNCOLLECTED) or string_find(msg, TRANSMOGRIFY_TOOLTIP_APPEARANCE_UNKNOWN)) then
+					unknown = true
+						break
 					end
 				end
-				if (not known) then 
-					-- some items can't have their appearances learned
-					local isInfoReady, canCollect = C_TransmogCollection.PlayerCanCollectSource(sourceID)
-					if (isInfoReady and canCollect) then 
-						local Uncollected = Cache_Uncollected[self] or Cache_GetUncollected(self)
-						Uncollected:Show()
-					end
-				end
+			end 
+			if (unknown) then 
+				local Uncollected = Cache_Uncollected[self] or Cache_GetUncollected(self)
+				Uncollected:Show()
 			else 
 				if Cache_Uncollected[self] then 
 					Cache_Uncollected[self]:Hide()
