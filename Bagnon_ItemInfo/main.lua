@@ -17,6 +17,7 @@ local string_match = string.match
 local tonumber = tonumber
 
 -- WoW API
+local C_TransmogCollection = _G.C_TransmogCollection
 local CreateFrame = _G.CreateFrame
 local GetContainerItemInfo = _G.GetContainerItemInfo
 local GetDetailedItemLevelInfo = _G.GetDetailedItemLevelInfo 
@@ -38,10 +39,11 @@ local L = {
 	["BoU"] = "BoU"  -- Bind on Use
 }
 
--- FontString Caches
+-- FontString & Texture Caches
 local Cache_ItemBind = {}
 local Cache_ItemGarbage = {}
 local Cache_ItemLevel = {}
+local Cache_Uncollected = {}
 
 -- Flag tracking merchant frame visibility
 local MERCHANT_VISIBLE
@@ -82,10 +84,16 @@ local RefreshScanner = function(button)
 	ScannerTip:SetBagItem(button:GetBag(), button:GetID())
 end
 
-local IsItemBound = function(button)
-	-- Refresh the scanner item
-	RefreshScanner(button)
+-- Move Pawn out of the way
+local RefreshPawn = function(button)
+	local UpgradeIcon = button.UpgradeIcon
+	if UpgradeIcon then
+		UpgradeIcon:ClearAllPoints()
+		UpgradeIcon:SetPoint("BOTTOMRIGHT", 2, 0)
+	end
+end
 
+local IsItemBound = function(button)
 	-- We're trying line 2 to 6 for the bind texts, 
 	-- I don't think they're ever further down.
 	for i = 2,6 do 
@@ -132,11 +140,7 @@ local Cache_GetItemLevel = function(button)
 	ItemLevel:SetShadowColor(0, 0, 0, .5)
 
 	-- Move Pawn out of the way
-	local UpgradeIcon = button.UpgradeIcon
-	if UpgradeIcon then
-		UpgradeIcon:ClearAllPoints()
-		UpgradeIcon:SetPoint("BOTTOMRIGHT", 2, 0)
-	end
+	RefreshPawn(button)
 
 	-- Store the reference for the next time
 	Cache_ItemLevel[button] = ItemLevel
@@ -154,11 +158,7 @@ local Cache_GetItemBind = function(button)
 	ItemBind:SetShadowColor(0, 0, 0, .5)
 
 	-- Move Pawn out of the way
-	local UpgradeIcon = button.UpgradeIcon
-	if UpgradeIcon then
-		UpgradeIcon:ClearAllPoints()
-		UpgradeIcon:SetPoint("BOTTOMRIGHT", 2, 0)
-	end
+	RefreshPawn(button)
 
 	-- Store the reference for the next time
 	Cache_ItemBind[button] = ItemBind
@@ -207,6 +207,24 @@ local Cache_GetItemGarbage = function(button)
 	return ItemGarbage
 end
 
+local Cache_GetUncollected = function(button)
+	local Uncollected = GetPluginContainter(button):CreateTexture()
+	Uncollected:SetDrawLayer("OVERLAY")
+	Uncollected:SetPoint("CENTER", 0, 0)
+	Uncollected:SetSize(24,24)
+	Uncollected:SetTexture([[Interface\Transmogrify\Transmogrify]])
+	Uncollected:SetTexCoord(0.804688, 0.875, 0.171875, 0.230469)
+	Uncollected:Hide()
+
+	-- Move Pawn out of the way
+	RefreshPawn(button)
+
+	-- Store the reference for the next time
+	Cache_Uncollected[button] = Uncollected
+
+	return Uncollected
+end
+
 -----------------------------------------------------------
 -- Main Update
 -----------------------------------------------------------
@@ -221,6 +239,47 @@ local Update = function(self)
 
 		-- Retrieve the itemID from the itemLink
 		local itemID = tonumber(string_match(itemLink, "item:(%d+)"))
+
+		-- Refresh the scanner a single time per update
+		RefreshScanner(self)
+
+		---------------------------------------------------
+		-- Uncollected Appearance
+		---------------------------------------------------
+		if (itemRarity and (itemRarity > 1)) and (not C_TransmogCollection.PlayerHasTransmog(itemID)) then 
+			local appearanceID, sourceID = C_TransmogCollection.GetItemInfo(itemID)
+			local data = sourceID and C_TransmogCollection.GetSourceInfo(sourceID)
+			if (itemRarity and (itemRarity > 1)) and (data and (data.isCollected == false)) then
+				-- figure out if we own a matching item
+				local known
+				local sources = C_TransmogCollection.GetAppearanceSources(appearanceID)
+				if sources then 
+					for i = 1, #sources do 
+						local data = C_TransmogCollection.GetSourceInfo(sources[i].sourceID) 
+						if (data and data.isCollected) then 
+							-- found a collected matching source
+							known = true 
+							break
+						end 
+					end
+				end
+				if (not known) then 
+					-- some items can't have their appearances learned
+					local isInfoReady, canCollect = C_TransmogCollection.PlayerCanCollectSource(sourceID)
+					if (isInfoReady and canCollect) then 
+						(Cache_Uncollected[self] or Cache_GetUncollected(self)):Show()
+					end
+				end
+			else 
+				if Cache_Uncollected[self] then 
+					Cache_Uncollected[self]:Hide()
+				end	
+			end
+		else
+			if Cache_Uncollected[self] then 
+				Cache_Uncollected[self]:Hide()
+			end	
+		end
 
 		---------------------------------------------------
 		-- ItemBind
@@ -240,7 +299,7 @@ local Update = function(self)
 		-- ItemLevel
 		---------------------------------------------------
 		if (itemEquipLoc == "INVTYPE_BAG") then 
-			RefreshScanner(self)
+			
 
 			local scannedSlots
 			local line = _G[ScannerTipName.."TextLeft3"]
@@ -280,8 +339,6 @@ local Update = function(self)
 
 			local scannedLevel
 			if (not isBattlePet) then
-				RefreshScanner(self)
-
 				local line = _G[ScannerTipName.."TextLeft2"]
 				if line then
 					local msg = line:GetText()
@@ -360,6 +417,9 @@ local Update = function(self)
 		end
 
 	else
+		if Cache_Uncollected[self] then 
+			Cache_Uncollected[self]:Hide()
+		end	
 		if Cache_ItemLevel[self] then
 			Cache_ItemLevel[self]:SetText("")
 		end
