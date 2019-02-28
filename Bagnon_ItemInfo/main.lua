@@ -246,10 +246,10 @@ local Update = function(self)
 		---------------------------------------------------
 		-- Uncollected Appearance
 		---------------------------------------------------
-		if (itemRarity and (itemRarity > 1)) and (not C_TransmogCollection.PlayerHasTransmog(itemID)) then 
+		if (itemRarity and itemRarity > 1) and (not C_TransmogCollection.PlayerHasTransmog(itemID)) then 
 			local appearanceID, sourceID = C_TransmogCollection.GetItemInfo(itemID)
 			local data = sourceID and C_TransmogCollection.GetSourceInfo(sourceID)
-			if (itemRarity and (itemRarity > 1)) and (data and (data.isCollected == false)) then
+			if (itemRarity and itemRarity > 1) and (data and not data.isCollected) then
 				-- figure out if we own a matching item
 				local known
 				local sources = C_TransmogCollection.GetAppearanceSources(appearanceID)
@@ -267,7 +267,8 @@ local Update = function(self)
 					-- some items can't have their appearances learned
 					local isInfoReady, canCollect = C_TransmogCollection.PlayerCanCollectSource(sourceID)
 					if (isInfoReady and canCollect) then 
-						(Cache_Uncollected[self] or Cache_GetUncollected(self)):Show()
+						local Uncollected = Cache_Uncollected[self] or Cache_GetUncollected(self)
+						Uncollected:Show()
 					end
 				end
 			else 
