@@ -13,7 +13,10 @@ local _G = _G
 local select = select
 local string_find = string.find
 local string_gsub = string.gsub
+local string_lower = string.lower
 local string_match = string.match
+local string_split = string.split
+local string_upper = string.upper
 local tonumber = tonumber
 
 -- WoW API
@@ -72,6 +75,70 @@ MerchantTracker:SetScript("OnEvent", function(self, event, ...)
 		end
 	end
 end)
+
+-----------------------------------------------------------
+-- Slash Command & Options Handling
+-----------------------------------------------------------
+do
+	-- Saved settings
+	BagnonItemInfo_DB = {
+		enableItemLevel = true, 
+		enableItemBind = true, 
+		enableGarbage = true, 
+		enableUncollected = true
+	}
+
+	local slashCommand = function(msg, editBox)
+		local action, element
+
+		-- Remove spaces at the start and end
+		msg = string_gsub(msg, "^%s+", "")
+		msg = string_gsub(msg, "%s+$", "")
+
+		-- Replace all space characters with single spaces
+		msg = string_gsub(msg, "%s+", " ") 
+
+		-- Extract the arguments 
+		if string_find(msg, "%s") then
+			action, element = string_split(" ", msg) 
+		else
+			action = msg
+		end
+
+		if (action == "enable") then 
+			if (element == "itemlevel" or element == "ilvl") then 
+				BagnonItemInfo_DB.enableItemLevel = true
+			elseif (element == "boe" or element == "bind") then 
+				BagnonItemInfo_DB.enableItemBind = true
+			elseif (element == "junk" or element == "trash" or element == "garbage") then 
+				BagnonItemInfo_DB.enableGarbage = true
+			elseif (element == "eye" or element == "transmog" or element == "uncollected") then 
+				BagnonItemInfo_DB.enableUncollected = true
+			end
+
+		elseif (action == "disable") then 
+			if (element == "itemlevel" or element == "ilvl") then 
+				BagnonItemInfo_DB.enableItemLevel = false
+			elseif (element == "boe" or element == "bind") then 
+				BagnonItemInfo_DB.enableItemBind = false
+			elseif (element == "junk" or element == "trash" or element == "garbage") then 
+				BagnonItemInfo_DB.enableGarbage = false
+			elseif (element == "eye" or element == "transmog" or element == "uncollected") then 
+				BagnonItemInfo_DB.enableUncollected = false
+			end
+		end
+	end
+
+	-- Create a unique name for the command
+	local commands = { "bagnoniteminfo", "biteminfo", "binfo", "bif" }
+	for i = 1,#commands do 
+		-- Register the chat command, keep hash upper case, value lowercase
+		local command = commands[i]
+		local name = "AZERITE_TEAM_PLUGIN_"..string_upper(command) 
+		_G["SLASH_"..name.."1"] = "/"..string_lower(command)
+		_G.SlashCmdList[name] = slashCommand
+	end
+end
 
 -----------------------------------------------------------
 -- Utility Functions
@@ -186,19 +253,21 @@ local Cache_GetItemGarbage = function(button)
 
 		ItemGarbage.tempLocked = true
 
-		local itemLink = button:GetItem()
-		if itemLink then 
-			local _, _, itemRarity, iLevel, _, _, _, _, itemEquipLoc = GetItemInfo(itemLink)
-			local texture, itemCount, locked, quality, readable, _, _, isFiltered, noValue, itemID = GetContainerItemInfo(button:GetBag(), button:GetID())
-		
-			local isBattlePet, battlePetLevel, battlePetRarity = GetBattlePetInfo(itemLink)
-			if isBattlePet then 
-				itemRarity = battlePetRarity
-			end
+		if (BagnonItemInfo_DB.enableGarbage) then  
+			local itemLink = button:GetItem()
+			if itemLink then 
+				local _, _, itemRarity, iLevel, _, _, _, _, itemEquipLoc = GetItemInfo(itemLink)
+				local texture, itemCount, locked, quality, readable, _, _, isFiltered, noValue, itemID = GetContainerItemInfo(button:GetBag(), button:GetID())
+			
+				local isBattlePet, battlePetLevel, battlePetRarity = GetBattlePetInfo(itemLink)
+				if isBattlePet then 
+					itemRarity = battlePetRarity
+				end
 
-			if not(((quality and (quality > 0)) or (itemRarity and (itemRarity > 0))) and (not locked)) then
-				Icon:SetDesaturated(true)
-			end 
+				if not(((quality and (quality > 0)) or (itemRarity and (itemRarity > 0))) and (not locked)) then
+					Icon:SetDesaturated(true)
+				end 
+			end
 		end
 
 		ItemGarbage.tempLocked = false
@@ -248,7 +317,7 @@ local Update = function(self)
 		---------------------------------------------------
 		-- Uncollected Appearance
 		---------------------------------------------------
-		if (itemRarity and itemRarity > 1) and (not C_TransmogCollection.PlayerHasTransmog(itemID)) then 
+		if (BagnonItemInfo_DB.enableUncollected) and (itemRarity and itemRarity > 1) and (not C_TransmogCollection.PlayerHasTransmog(itemID)) then 
 			local unknown
 			for i = ScannerTip:NumLines(),2,-1 do 
 				local line = _G[ScannerTipName.."TextLeft"..i]
@@ -277,7 +346,7 @@ local Update = function(self)
 		---------------------------------------------------
 		-- ItemBind
 		---------------------------------------------------
-		if (itemRarity and (itemRarity > 1)) and ((bindType == 2) or (bindType == 3)) and (not IsItemBound(self)) then
+		if (BagnonItemInfo_DB.enableItemBind) and (itemRarity and (itemRarity > 1)) and ((bindType == 2) or (bindType == 3)) and (not IsItemBound(self)) then
 			local ItemBind = Cache_ItemBind[self] or Cache_GetItemBind(self)
 			local r, g, b = GetItemQualityColor(itemRarity)
 			ItemBind:SetTextColor(r * 2/3, g * 2/3, b * 2/3)
@@ -291,7 +360,7 @@ local Update = function(self)
 		---------------------------------------------------
 		-- ItemLevel
 		---------------------------------------------------
-		if (itemEquipLoc == "INVTYPE_BAG") then 
+		if (BagnonItemInfo_DB.enableItemLevel) and (itemEquipLoc == "INVTYPE_BAG") then 
 			
 
 			local scannedSlots
@@ -328,7 +397,7 @@ local Update = function(self)
 			end 
 
 		-- Display item level of equippable gear and artifact relics
-		elseif ((itemRarity and (itemRarity > 0)) and ((itemEquipLoc and _G[itemEquipLoc]) or (itemID and IsArtifactRelicItem(itemID)))) or (isBattlePet) then
+		elseif (BagnonItemInfo_DB.enableItemLevel) and ((itemRarity and (itemRarity > 0)) and ((itemEquipLoc and _G[itemEquipLoc]) or (itemID and IsArtifactRelicItem(itemID)))) or (isBattlePet) then
 
 			local scannedLevel
 			if (not isBattlePet) then
@@ -373,7 +442,7 @@ local Update = function(self)
 		local Icon = self.icon or _G[self:GetName().."IconTexture"]
 		local showJunk = false
 
-		if Icon then 
+		if (BagnonItemInfo_DB.enableGarbage) and Icon then 
 			local texture, itemCount, locked, quality, readable, _, _, isFiltered, noValue, itemID = GetContainerItemInfo(self:GetBag(), self:GetID())
 
 			local notGarbage = ((quality and (quality > 0)) or (itemRarity and (itemRarity > 0))) and (not locked) 
@@ -402,7 +471,7 @@ local Update = function(self)
 			if ItemGarbage then 
 				ItemGarbage.showJunk = showJunk
 			end 
-			if (MERCHANT_VISIBLE and showJunk) then 
+			if (BagnonItemInfo_DB.enableGarbage) and (MERCHANT_VISIBLE and showJunk) then 
 				JunkIcon:Show()
 			else
 				JunkIcon:Hide()
@@ -425,7 +494,7 @@ local Update = function(self)
 		end
 		local JunkIcon = self.JunkIcon
 		if JunkIcon then 
-			if (MERCHANT_VISIBLE and showJunk) then 
+			if (BagnonItemInfo_DB.enableGarbage) and (MERCHANT_VISIBLE and showJunk) then 
 				JunkIcon:Show()
 			else
 				JunkIcon:Hide()
