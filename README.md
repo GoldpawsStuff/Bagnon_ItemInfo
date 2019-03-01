@@ -20,7 +20,7 @@ If you don't wish to use all of the features, you can toggle them individually w
 * Patreon: [www.patreon.com/AzeriteUI](https://www.patreon.com/azeriteui)  
 * PayPal: [www.paypal.me/AzeriteUI](https://www.paypal.me/azeriteui)  
 
-## **Follow AzeriteUI:**  
+## **Follow Azerite Team:**  
 * Discord: [discord.gg/MUSfWXd](https://discord.gg/MUSfWXd)  
 * Twitter: [@AzeriteUI](https://twitter.com/azeriteui)  
 * Instagram: [@AzeriteUI](https://instagram.com/azeriteui/)  
