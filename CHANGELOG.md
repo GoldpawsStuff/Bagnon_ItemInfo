@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.6-Release] 2019-03-01
+### Added
+- Added chat commands to toggle the individual elements, since some don't want all four, but maybe just two or three. 
+
 ## [1.0.5-Release] 2019-02-28
 ### Fixed
 - Switched to tooltip scanning using global strings to avoid false positives on uncollected appearances. 
