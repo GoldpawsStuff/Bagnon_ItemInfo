@@ -33,9 +33,13 @@ local S_ITEM_BOUND1 = _G.ITEM_SOULBOUND
 local S_ITEM_BOUND2 = _G.ITEM_ACCOUNTBOUND
 local S_ITEM_BOUND3 = _G.ITEM_BNETACCOUNTBOUND
 local S_ITEM_LEVEL = "^" .. string_gsub(_G.ITEM_LEVEL, "%%d", "(%%d+)")
-local S_CONTAINER_SLOTS = "^" .. string_gsub(string_gsub(_G.CONTAINER_SLOTS, "%%d", "(%%d+)"), "%%s", "(%.+)")
 local S_TRANSMOGRIFY_STYLE_UNCOLLECTED = _G.TRANSMOGRIFY_STYLE_UNCOLLECTED
 local S_TRANSMOGRIFY_TOOLTIP_APPEARANCE_UNKNOWN = _G.TRANSMOGRIFY_TOOLTIP_APPEARANCE_UNKNOWN
+
+-- Redoing this to take other locales into consideration, 
+-- and to make sure we're capturing the slot count, and not the bag type. 
+--local S_CONTAINER_SLOTS = "^" .. string_gsub(string_gsub(_G.CONTAINER_SLOTS, "%%d", "(%%d+)"), "%%s", "(%.+)")
+local S_CONTAINER_SLOTS = "^" .. (string.gsub(string.gsub(CONTAINER_SLOTS, "%%([%d%$]-)d", "(%%d+)"), "%%([%d%$]-)s", "%.+"))
 
 -- Localization. 
 -- *Just enUS so far. 
