@@ -28,7 +28,3 @@ If you don't wish to use all of the features, you can toggle them individually w
 * Facebook: [@AzeriteUI](https://www.facebook.com/azeriteui/)  
 * YouTube: [@AzeriteUI](https://www.youtube.com/azeriteui)   
 * Reddit: [@AzeriteUI](https://www.reddit.com/r/azeriteui/)  
-
-## **Follow the team:**
-* Twitter Blakmane: [@troko512](https://twitter.com/troko512)  
-* Twitter Goldpaw: [@GoldpawTheGreat](https://twitter.com/goldpawthegreat)  
