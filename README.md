@@ -1,4 +1,4 @@
-[ ![Become a Patreon](http://azerite.org/img/social-media-buttons-patreon-small.jpg) ](https://www.patreon.com/AzeriteUI) 
+[ ![Become a Patreon](http://larsnorbergofficial.com/img/social-media-buttons-patreon-small.jpg) ](https://www.patreon.com/goldpawsstuff) 
 
 This is a simple plugin for the addon [Bagnon](https://mods.curse.com/addons/wow/bagnon) that shows the item level of your equipable gear, bind status of items, a purple eye on uncollected transmog appearances and desaturates and tones down vendor garbage. 
 
@@ -16,15 +16,11 @@ If you don't wish to use all of the features, you can toggle them individually w
 * **/bif enable uncollected** _- Enable the uncollected appearance eye._  
 * **/bif disable uncollected** _- Disable the uncollected appearance eye._  
 
-## **Pledge to our work:**  
-* Patreon: [www.patreon.com/AzeriteUI](https://www.patreon.com/azeriteui)  
-* PayPal: [www.paypal.me/AzeriteUI](https://www.paypal.me/azeriteui)  
-* Liberapay: [liberapay.com/AzeriteTeam/donate](https://liberapay.com/AzeriteTeam/donate)
+## **Pledge to my work:**  
+* Patreon: [www.patreon.com/goldpawsstuff](https://www.patreon.com/goldpawsstuff)  
+* PayPal: [www.paypal.me/goldpawsstuff](https://www.paypal.me/goldpawsstuff)  
+* Liberapay: [liberapay.com/goldpawsstuff/donate](https://liberapay.com/goldpawsstuff/donate)
 
-## **Follow Azerite Team:**  
+## **Join me on social media:**  
 * Discord: [discord.gg/MUSfWXd](https://discord.gg/MUSfWXd)  
-* Twitter: [@AzeriteUI](https://twitter.com/azeriteui)  
-* Instagram: [@AzeriteUI](https://instagram.com/azeriteui/)  
-* Facebook: [@AzeriteUI](https://www.facebook.com/azeriteui/)  
-* YouTube: [@AzeriteUI](https://www.youtube.com/azeriteui)   
-* Reddit: [@AzeriteUI](https://www.reddit.com/r/azeriteui/)  
+* Twitter: [@GoldpawsStuff](https://twitter.com/goldpawsstuff)  
