@@ -55,30 +55,30 @@ local Cache_ItemLevel = {}
 local Cache_Uncollected = {}
 
 -- Flag tracking merchant frame visibility
-local MERCHANT_VISIBLE
+--local MERCHANT_VISIBLE
 
 -- Just keep this running, regardless of other stuff (?)
 -- *might be conflicts with the standard Update function here. 
-local MerchantTracker = CreateFrame("Frame")
-MerchantTracker:RegisterEvent("MERCHANT_SHOW")
-MerchantTracker:RegisterEvent("MERCHANT_CLOSED")
-MerchantTracker:SetScript("OnEvent", function(self, event, ...) 
-	if (event == "MERCHANT_SHOW") then
-		MERCHANT_VISIBLE = true
-	elseif (event == "MERCHANT_CLOSED") then 
-		MERCHANT_VISIBLE = false
-	end
-	for button,ItemGarbage in pairs(Cache_ItemGarbage) do
-		local JunkIcon = button.JunkIcon
-		if JunkIcon then
-			if (MERCHANT_VISIBLE and ItemGarbage.showJunk) then 
-				JunkIcon:Show()
-			else 
-				JunkIcon:Hide()
-			end
-		end
-	end
-end)
+--local MerchantTracker = CreateFrame("Frame")
+--MerchantTracker:RegisterEvent("MERCHANT_SHOW")
+--MerchantTracker:RegisterEvent("MERCHANT_CLOSED")
+--MerchantTracker:SetScript("OnEvent", function(self, event, ...) 
+--	if (event == "MERCHANT_SHOW") then
+--		MERCHANT_VISIBLE = true
+--	elseif (event == "MERCHANT_CLOSED") then 
+--		MERCHANT_VISIBLE = false
+--	end
+--	for button,ItemGarbage in pairs(Cache_ItemGarbage) do
+--		local JunkIcon = button.JunkIcon
+--		if JunkIcon then
+--			if (MERCHANT_VISIBLE and ItemGarbage.showJunk) then 
+--				JunkIcon:Show()
+--			else 
+--				JunkIcon:Hide()
+--			end
+--		end
+--	end
+--end)
 
 -----------------------------------------------------------
 -- Slash Command & Options Handling
@@ -469,18 +469,18 @@ local Update = function(self)
 			end
 		end
 
-		local JunkIcon = self.JunkIcon
-		if JunkIcon then 
-			local ItemGarbage = Cache_ItemGarbage[self] 
-			if ItemGarbage then 
-				ItemGarbage.showJunk = showJunk
-			end 
-			if (BagnonItemInfo_DB.enableGarbage) and (MERCHANT_VISIBLE and showJunk) then 
-				JunkIcon:Show()
-			else
-				JunkIcon:Hide()
-			end
-		end
+		--local JunkIcon = self.JunkIcon
+		--if JunkIcon then 
+		--	local ItemGarbage = Cache_ItemGarbage[self] 
+		--	if ItemGarbage then 
+		--		ItemGarbage.showJunk = showJunk
+		--	end 
+		--	if (BagnonItemInfo_DB.enableGarbage) and (MERCHANT_VISIBLE and showJunk) then 
+		--		JunkIcon:Show()
+		--	else
+		--		JunkIcon:Hide()
+		--	end
+		--end
 
 	else
 		if Cache_Uncollected[self] then 
@@ -496,15 +496,15 @@ local Update = function(self)
 			Cache_ItemGarbage[self]:Hide()
 			Cache_ItemGarbage[self].showJunk = nil
 		end
-		local JunkIcon = self.JunkIcon
-		if JunkIcon then 
-			if (BagnonItemInfo_DB.enableGarbage) and (MERCHANT_VISIBLE and showJunk) then 
-				JunkIcon:Show()
-			else
-				JunkIcon:Hide()
-			end
-		end
-	end	
+		--local JunkIcon = self.JunkIcon
+		--if JunkIcon then 
+		--	if (BagnonItemInfo_DB.enableGarbage) and (MERCHANT_VISIBLE and showJunk) then 
+		--		JunkIcon:Show()
+		--	else
+		--		JunkIcon:Hide()
+		--	end
+		--end
+	end
 end 
 
 hooksecurefunc(Bagnon.ItemSlot, "Update", Update)
