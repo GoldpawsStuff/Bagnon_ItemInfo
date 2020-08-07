@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.14-Release] 2020-08-07
+### Changed
+- ToC updates.
+
 ## [1.0.13-Release] 2020-01-13
 ### Fixed
 - Fixed for Bagnon 8.2.29. Junk icons are working correctly now.

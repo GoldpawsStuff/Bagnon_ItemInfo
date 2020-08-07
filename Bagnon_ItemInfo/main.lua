@@ -1,3 +1,6 @@
+if (not Bagnon) then
+	return
+end
 
 -- Using the Bagnon way to retrieve names, namespaces and stuff
 local MODULE =  ...
