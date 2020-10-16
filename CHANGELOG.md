@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.16-Release] 2020-10-16
+- Bump to WoW Client patch 9.0.1.
+
 ## [1.0.15-Release] 2020-09-25
 - Cache fixes and Bagnon 9.x compatibility.
 
