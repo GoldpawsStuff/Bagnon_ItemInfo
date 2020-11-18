@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.0.17-Release] 2020-11-18
-- Bump to WoW Client patch 9.0.1.
+- Bump to WoW Client patch 9.0.2.
 
 ## [1.0.16-Release] 2020-10-16
 - Bump to WoW Client patch 9.0.1.
