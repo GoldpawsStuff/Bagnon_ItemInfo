@@ -1,4 +1,4 @@
-## Interface: 90002
+## Interface: 90005
 ## Title: |cff20ff20Bagnon|r |cffffffffItemInfo|r
 ## Author: Lars "Goldpaw" Norberg
 ## Notes: |cff666666By Lars "Goldpaw" Norberg|r |n|n|cffffffffA simple Bagnon plugin that displays |nthe itemlevel and bind status of your equipable gear |nand a purple eye on uncollected appearances.|r|n|n|cff4488ffPayPal|r|cffffffff:|r |n|cffffffffwww.paypal.me/GoldpawsStuff|r|n|n|cff4488ffPatreon|r|cffffffff:|r |n|cffffffffwww.patreon.com/GoldpawsStuff|r
