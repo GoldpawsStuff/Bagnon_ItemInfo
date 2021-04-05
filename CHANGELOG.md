@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.19-Release] 2021-04-05
+- Spring cleaning.
+
 ## [1.0.18-Release] 2021-03-10
 - Bump to WoW client patch 9.0.5.
 
