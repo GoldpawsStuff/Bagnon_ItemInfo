@@ -1,4 +1,4 @@
-name: Packager (Retail)
+name: Packager
 
 on:
   create:
@@ -20,3 +20,13 @@ jobs:
         uses: BigWigsMods/packager@master
         with:
           args: -g retail -m .pkgmeta
+
+      - name: Package Classic
+        uses: BigWigsMods/packager@master
+        with:
+          args: -g classic -m .pkgmeta
+
+      - name: Package BC
+        uses: BigWigsMods/packager@master
+        with:
+          args: -g bcc -m .pkgmeta
