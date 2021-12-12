@@ -11,6 +11,8 @@ If you don't wish to use all of the features, you can toggle them individually w
 * **/bif disable garbage** _- Disable the garbage desaturation._  
 * **/bif enable uncollected** _- Enable the uncollected appearance eye._  
 * **/bif disable uncollected** _- Disable the uncollected appearance eye._  
+* **/bif enable color** _- Enable rarity coloring of text._  
+* **/bif disable color** _- Disable rarity coloring of text._  
 
 ## **Support & Connect**
 * PayPal: [www.paypal.me/goldpawsstuff](https://www.paypal.me/goldpawsstuff)  
