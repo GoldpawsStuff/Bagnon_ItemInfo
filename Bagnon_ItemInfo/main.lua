@@ -283,7 +283,10 @@ local Update = function(self)
 				local  _, _, level, rarity = string_match(data, "(%w+):(%d+):(%d+):(%d+)")
 				isBattlePet, battlePetLevel, battlePetRarity = true, level or 1, tonumber(rarity) or 0
 			end
-			displayR, displayG, displayB = GetItemQualityColor(battlePetRarity or itemRarity)
+			-- Check if we actually have a valid rarity before retrieving the color. Doh.
+			if (battlePetRarity) or (itemRarity and itemRarity > 1) then
+				displayR, displayG, displayB = GetItemQualityColor(battlePetRarity or itemRarity)
+			end
 		end
 
 		---------------------------------------------------
