@@ -325,18 +325,22 @@ local Update = function(self)
 		if (BagnonItemInfo_DB.enableItemBind) and (itemRarity and (itemRarity > 1)) and ((bindType == 2) or (bindType == 3)) then
 
 			local showStatus = true
-			for i = 2,6 do 
-				local line = _G[ScannerTipName.."TextLeft"..i]
-				if (not line) then
-					break
-				end
-				local msg = line:GetText()
-				if (msg) then 
-					if (string_find(msg, S_ITEM_BOUND1) or string_find(msg, S_ITEM_BOUND2) or string_find(msg, S_ITEM_BOUND3)) then 
-						showStatus = nil
-					end
-				end
+			local _, _, _, _, _, _, _, _, _, _, isBound = GetContainerItemInfo(bag, slot)
+			if (isBound) then
+				showStatus = nil
 			end
+			--for i = 2,6 do 
+			--	local line = _G[ScannerTipName.."TextLeft"..i]
+			--	if (not line) then
+			--		break
+			--	end
+			--	local msg = line:GetText()
+			--	if (msg) then 
+			--		if (string_find(msg, S_ITEM_BOUND1) or string_find(msg, S_ITEM_BOUND2) or string_find(msg, S_ITEM_BOUND3)) then 
+			--			showStatus = nil
+			--		end
+			--	end
+			--end
 			if (showStatus) then
 				local ItemBind = Cache_ItemBind[self] or Cache_GetItemBind(self)
 				if (BagnonItemInfo_DB.enableRarityColoring) and (displayR) and (displayG) and (displayB) then
@@ -345,6 +349,10 @@ local Update = function(self)
 					ItemBind:SetTextColor(240/255, 240/255, 240/255)
 				end
 				ItemBind:SetText((bindType == 3) and L["BoU"] or L["BoE"])
+			else
+				if Cache_ItemBind[self] then 
+					Cache_ItemBind[self]:SetText("")
+				end	
 			end
 
 		else 

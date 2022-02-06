@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.24-Release] 2022-02-06
+### Fixed
+- Fixed an issue where bind status would not be properly updated when equipping items.
+
 ## [1.0.23-Release] 2021-12-13
 ### Fixed
 - Fixed an issue where we attempted to check for rarity color before checking if we had a valid rarity to begin with.
