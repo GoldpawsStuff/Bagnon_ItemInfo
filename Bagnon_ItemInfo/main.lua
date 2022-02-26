@@ -44,6 +44,10 @@ local S_TRANSMOGRIFY_TOOLTIP_APPEARANCE_UNKNOWN = _G.TRANSMOGRIFY_TOOLTIP_APPEAR
 --local S_CONTAINER_SLOTS = "^" .. string_gsub(string_gsub(_G.CONTAINER_SLOTS, "%%d", "(%%d+)"), "%%s", "(%.+)")
 local S_CONTAINER_SLOTS = "^" .. (string.gsub(string.gsub(CONTAINER_SLOTS, "%%([%d%$]-)d", "(%%d+)"), "%%([%d%$]-)s", "%.+"))
 
+-- WoW Client Versions
+local WoWClassic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
+local WoWBCC = (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
+
 -- Localization. 
 -- *Just enUS so far. 
 local L = {
@@ -329,22 +333,28 @@ local Update = function(self)
 			if (isBound) then
 				showStatus = nil
 			end
-			--for i = 2,6 do 
-			--	local line = _G[ScannerTipName.."TextLeft"..i]
-			--	if (not line) then
-			--		break
-			--	end
-			--	local msg = line:GetText()
-			--	if (msg) then 
-			--		if (string_find(msg, S_ITEM_BOUND1) or string_find(msg, S_ITEM_BOUND2) or string_find(msg, S_ITEM_BOUND3)) then 
-			--			showStatus = nil
-			--		end
-			--	end
-			--end
+
+			-- Bagnon_BoE bug report #6 indicates that GetContainerItemInfo isn't returning 'isBound' in the classics. 
+			if (showStatus) and (WoWBCC or WoWClassic) then
+				for i = 2,6 do 
+					local line = _G[ScannerTipName.."TextLeft"..i]
+					if (not line) then
+						break
+					end
+					local msg = line:GetText()
+					if (msg) then 
+						if (string_find(msg, S_ITEM_BOUND1) or string_find(msg, S_ITEM_BOUND2) or string_find(msg, S_ITEM_BOUND3)) then 
+							showStatus = nil
+						end
+					end
+				end
+			end
+
 			if (showStatus) then
 				local ItemBind = Cache_ItemBind[self] or Cache_GetItemBind(self)
 				if (BagnonItemInfo_DB.enableRarityColoring) and (displayR) and (displayG) and (displayB) then
-					ItemBind:SetTextColor(displayR * 2/3, displayG * 2/3, displayB * 2/3)
+					local m = (itemRarity == 3 or itemRarity == 4) and 1 or 2/3
+					ItemBind:SetTextColor(displayR * m, displayG * m, displayB * m)
 				else
 					ItemBind:SetTextColor(240/255, 240/255, 240/255)
 				end

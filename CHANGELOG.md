@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.27-Release] 2022-02-26
+### Fixed
+- Reintroduce tooltip scanning for soulbound status to fix itembind problems in the classics. [#6](https://github.com/GoldpawsStuff/Bagnon_BoE/issues/6)
+
 ## [1.0.26-Release] 2022-02-23
 - ToC bump.
 
