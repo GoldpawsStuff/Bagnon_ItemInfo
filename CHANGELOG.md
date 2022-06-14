@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.30-Release] 2022-06-14
+### Changed
+- Some untested performance updates.
+
 ## [1.0.29-Release] 2022-05-31
 - Bump toc to WoW client patch 9.2.5.
 
