@@ -48,9 +48,11 @@ local S_ILVL = "^" .. string_gsub(_G.ITEM_LEVEL, "%%d", "(%%d+)")
 -- and to make sure we're capturing the slot count, and not the bag type.
 local S_SLOTS = "^" .. (string.gsub(string.gsub(CONTAINER_SLOTS, "%%([%d%$]-)d", "(%%d+)"), "%%([%d%$]-)s", "%.+"))
 
--- WoW Client Versions
-local WoWClassic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
-local WoWBCC = (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
+-- WoW Client versions
+local MAJOR = tonumber((string_split(".", (GetBuildInfo()))))
+local WoWClassic = MAJOR == 1
+local WoWBCC = MAJOR == 2
+local WoWWotLK = MAJOR == 3
 
 -- Localization.
 -- *Just enUS so far.
@@ -346,7 +348,7 @@ local Update = function(self)
 			end
 
 			-- Bagnon_BoE bug report #6 indicates that GetContainerItemInfo isn't returning 'isBound' in the classics.
-			if (showStatus) and (WoWBCC or WoWClassic) then
+			if (showStatus) and (WoWBCC or WoWClassic or WoWWotLK) then
 
 				-- Avoid setting tooltip unless we have to
 				if (not hasTip) then
