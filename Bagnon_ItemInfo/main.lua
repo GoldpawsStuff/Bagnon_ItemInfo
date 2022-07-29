@@ -49,7 +49,12 @@ local S_ILVL = "^" .. string_gsub(_G.ITEM_LEVEL, "%%d", "(%%d+)")
 local S_SLOTS = "^" .. (string.gsub(string.gsub(CONTAINER_SLOTS, "%%([%d%$]-)d", "(%%d+)"), "%%([%d%$]-)s", "%.+"))
 
 -- WoW Client versions
-local MAJOR = tonumber((string_split(".", (GetBuildInfo()))))
+local currentClientPatch, currentClientBuild = GetBuildInfo()
+currentClientBuild = tonumber(currentClientBuild)
+
+local MAJOR,MINOR,PATCH = string.split(".", currentClientPatch)
+MAJOR = tonumber(MAJOR)
+
 local WoWClassic = MAJOR == 1
 local WoWBCC = MAJOR == 2
 local WoWWotLK = MAJOR == 3
