@@ -24,9 +24,37 @@
 
 --]]
 local Addon, Private =  ...
-if (Private.Incompatible) then
-	print("|cffff1111"..Addon.." was auto-disabled.")
-	return
-end
+local Module = Bagnon:NewModule("Bagnon_Garbage")
+local cache = {}
 
-local Module = Bagnon:NewModule(Addon, Private, "WildAddon-1.0")
+Private.cache[Module] = cache
+Private.AddUpdater(Module, function(self)
+
+	if (self.hasItem and self.info.quality == 0 and not self.info.locked) then
+
+		local overlay = cache[self]
+		if (not overlay) then
+			overlay = self:CreateTexture()
+			overlay.icon = self.icon or _G[self:GetName().."IconTexture"]
+			overlay:Hide()
+			overlay:SetDrawLayer("ARTWORK")
+			overlay:SetAllPoints(overlay.icon)
+			overlay:SetColorTexture(.04, .013333333, .004705882, .6)
+			cache[self] = overlay
+		end
+
+		overlay:Show()
+		SetItemButtonDesaturated(self, true)
+
+	else
+		local overlay = cache[self]
+		if (overlay) then
+			overlay:Hide()
+			SetItemButtonDesaturated(self, self.info.locked)
+		end
+	end
+
+end)
+
+-- Also need to hook this to locked updates
+hooksecurefunc(Bagnon.ItemSlot or Bagnon.Item, "SetLocked", Private.updatesByModule[Module])
