@@ -67,9 +67,9 @@ Private.AddUpdater(Module, function(self)
 
 		-- https://wowpedia.fandom.com/wiki/Enum.InventoryType
 		local class, equip, level, quality = self.info.class, self.info.equip, self.info.level, self.info.quality
-		local noequip = not equip or equip == "INVTYPE_BAG" or equip == "INVTYPE_NON_EQUIP" or equip == "INVTYPE_TABARD" or equip == "INVTYPE_AMMO" or equip == "INVTYPE_QUIVER" or equip == "INVTYPE_BODY"
+		local noequip = not equip or not _G[equip] or quip == "INVTYPE_BAG" or equip == "INVTYPE_NON_EQUIP" or equip == "INVTYPE_TABARD" or equip == "INVTYPE_AMMO" or equip == "INVTYPE_QUIVER" or equip == "INVTYPE_BODY"
 		local isbag = equip == "INVTYPE_BAG"
-		local isgear = quality and not noequip
+		local isgear = quality and quality > 0 and not noequip
 		local ispet = battlepetclass and class == battlepetclass
 
 		-- We only want quality coloring on item- and pet levels, not bag slots.
