@@ -50,12 +50,15 @@ Private.AddUpdater = function(module, func)
 	Private.updatesByModule[module] = func
 end
 
--- Forcefully update this module's buttons.
+-- Forcefully update all module buttons.
 Private.Forceupdate = function(module)
-	local cache, func = Private.cache, Private.owners[module]
-	for item in next,cache do
-		func(item)
+	for module,cache in next,Private.cache do
+		local func = Private.updatesByModule[module]
+		for item in next,cache do
+			func(item)
+		end
 	end
+
 end
 
 -- Call all updates from all my plugins, then reset the tooltip.

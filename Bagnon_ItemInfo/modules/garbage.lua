@@ -30,7 +30,7 @@ local cache = {}
 Private.cache[Module] = cache
 Private.AddUpdater(Module, function(self)
 
-	if (self.hasItem and self.info.quality == 0 and not self.info.locked) then
+	if (self.hasItem and BagnonItemInfo_DB.enableGarbage and self.info.quality == 0 and not self.info.locked) then
 
 		local overlay = cache[self]
 		if (not overlay) then

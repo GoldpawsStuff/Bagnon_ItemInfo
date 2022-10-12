@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.39-Release] 2022-10-12
+### Fixed
+- The transmog collection module is no longer loaded in classics where it is not supported.
+- The chat commands are once again in place and works.
+
 ## [2.0.37-Release] 2022-10-12
 ### Fixed
 - Itemlevels are now once more only shown for actual gear.

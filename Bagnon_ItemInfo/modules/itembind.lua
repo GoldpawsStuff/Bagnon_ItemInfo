@@ -72,7 +72,7 @@ Private.AddUpdater(Module, function(self)
 
 	local message, color, mult
 
-	if (self.hasItem) then
+	if (self.hasItem and BagnonItemInfo_DB.enableItemBind) then
 
 		local quality, bind = self.info.quality, self.info.bind
 
@@ -117,7 +117,7 @@ Private.AddUpdater(Module, function(self)
 
 				message = bind == 3 and L["BoU"] or L["BoE"]
 
-				if (BagnonBoE_DB.enableRarityColoring) then
+				if (BagnonItemInfo_DB.enableRarityColoring) then
 					color = quality and colors[quality]
 					mult = (quality ~= 3 and quality ~= 4) and .7
 				end

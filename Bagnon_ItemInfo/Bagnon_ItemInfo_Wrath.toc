@@ -19,4 +19,3 @@ main.lua
 modules\garbage.lua
 modules\itembind.lua
 modules\itemlevel.lua
-modules\uncollected.lua

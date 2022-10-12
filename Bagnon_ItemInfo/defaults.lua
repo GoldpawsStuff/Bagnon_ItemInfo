@@ -36,7 +36,7 @@ BagnonItemInfo_DB = {
 	enableRarityColoring = true
 }
 
-SLASH_BAGNON_ITEMLEVEL1 = "/bil"
+SLASH_BAGNON_ITEMLEVEL1 = "/bif"
 SlashCmdList["BAGNON_ITEMLEVEL"] = function(msg)
 	if (not msg) then
 		return

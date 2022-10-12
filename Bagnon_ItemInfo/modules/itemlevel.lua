@@ -63,7 +63,7 @@ Private.AddUpdater(Module, function(self)
 
 	local message, color
 
-	if (self.hasItem) then
+	if (self.hasItem and BagnonItemInfo_DB.enableItemLevel) then
 
 		-- https://wowpedia.fandom.com/wiki/Enum.InventoryType
 		local class, equip, level, quality = self.info.class, self.info.equip, self.info.level, self.info.quality
@@ -73,7 +73,7 @@ Private.AddUpdater(Module, function(self)
 		local ispet = battlepetclass and class == battlepetclass
 
 		-- We only want quality coloring on item- and pet levels, not bag slots.
-		if (isgear or ispet) and (BagnonItemLevel_DB.enableRarityColoring) then
+		if (isgear or ispet) and (BagnonItemInfo_DB.enableRarityColoring) then
 			color = quality and colors[quality]
 			message = level
 		end

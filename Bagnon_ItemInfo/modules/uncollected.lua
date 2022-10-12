@@ -46,7 +46,7 @@ Private.AddUpdater(Module, function(self)
 
 	local show
 
-	if (self.hasItem) then
+	if (self.hasItem and BagnonItemInfo_DB.enableUncollected) then
 
 		local quality, id = self.info.quality, self.info.id
 
