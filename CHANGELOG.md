@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.40-Release] 2022-10-13
+### Fixed
+- Fixed an issue where the wrong bag slot would be queried, resulting in wrong information on the items.
+
 ## [2.0.39-Release] 2022-10-12
 ### Fixed
 - The transmog collection module is no longer loaded in classics where it is not supported.

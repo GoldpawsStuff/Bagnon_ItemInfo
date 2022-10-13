@@ -95,7 +95,7 @@ Private.AddUpdater(Module, function(self)
 				if (not tooltip.owner or not tooltip.bag or not tooltip.slot) then
 					tooltip.owner, tooltip.bag,tooltip.slot = self, self.bag, self:GetID()
 					tooltip:SetOwner(tooltip.owner, "ANCHOR_NONE")
-					tooltip:SetBagItem(tooltip.bag, tooltip.bag)
+					tooltip:SetBagItem(tooltip.bag, tooltip.slot)
 				end
 
 				for i = 2,6 do
