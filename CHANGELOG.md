@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.42-Release] 2022-11-02
+- Add support for retail 10.0.2 C_Container API.
+
 ## [2.0.41-Release] 2022-10-25
 - Bumped retail version to the 10.0.0 patch.
 

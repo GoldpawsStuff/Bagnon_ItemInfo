@@ -32,7 +32,10 @@ local _G = _G
 local string_find = string.find
 
 -- WoW API
-local GetContainerItemInfo = C_Container and C_Container.GetContainerItemInfo or GetContainerItemInfo
+local GetContainerItemInfo = GetContainerItemInfo
+
+-- WoW10 API
+local C_Container_GetContainerItemInfo = C_Container and C_Container.GetContainerItemInfo
 
 local retail = Private.IsRetail
 local tooltip = Private.tooltip
@@ -84,7 +87,14 @@ Private.AddUpdater(Module, function(self)
 			-- Only retail returns this info, and not always accurately
 			if (retail) then
 				local bag, slot = self.bag, self:GetID()
-				local _, _, _, _, _, _, _, _, _, _, bound = GetContainerItemInfo(bag, slot)
+				if (C_Container_GetContainerItemInfo) then
+					local containerInfo = C_Container_GetContainerItemInfo(bag,slot)
+					if (containerInfo) then
+						bound = containerInfo.isBound
+					end
+				else
+					_, _, _, _, _, _, _, _, _, _, bound = GetContainerItemInfo(bag, slot)
+				end
 				if (bound) then
 					show = nil
 				end
