@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.44-Release] 2022-11-25
+### Changed
+- Now only uses the old tooltip scanning in the classic versions of WoW.
+- Now utilizes the C_TooltipInfo and TooltipUtil APIs in retail. Which will rock when Bagnon is updated for 10.0.2!
+
 ## [2.0.43-Release] 2022-11-16
 - Bump to retail client patch 10.0.2.
 

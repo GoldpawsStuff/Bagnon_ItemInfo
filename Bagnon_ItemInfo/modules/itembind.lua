@@ -29,6 +29,7 @@ local cache = {}
 
 -- Speed!
 local _G = _G
+local ipairs = ipairs
 local string_find = string.find
 
 -- WoW API
@@ -102,24 +103,52 @@ Private.AddUpdater(Module, function(self)
 
 			-- Scan the tooltip to see if the item is bound.
 			if (show) then
-				if (not tooltip.owner or not tooltip.bag or not tooltip.slot) then
-					tooltip.owner, tooltip.bag,tooltip.slot = self, self.bag, self:GetID()
-					tooltip:SetOwner(tooltip.owner, "ANCHOR_NONE")
-					tooltip:SetBagItem(tooltip.bag, tooltip.slot)
-				end
 
-				for i = 2,6 do
-					local line = _G[tooltipName.."TextLeft"..i]
-					if (not line) then
-						break
+				if (retail) then
+
+					local tooltipData = C_TooltipInfo.GetBagItem(self.bag, self:GetID())
+
+					-- Assign data to 'type' and 'guid' fields.
+					TooltipUtil.SurfaceArgs(tooltipData)
+
+					-- Assign data to 'leftText' fields.
+					for _, line in ipairs(tooltipData.lines) do
+						TooltipUtil.SurfaceArgs(line)
 					end
 
-					local msg = line:GetText() or ""
-					if (string_find(msg, s_item_bound1) or string_find(msg, s_item_bound2) or string_find(msg, s_item_bound3)) then
-						show = nil
-						break
+					for i = 2,6 do
+						local msg = tooltipData.lines[i].leftText
+						if (not msg) then break end
+
+						if (string_find(msg, s_item_bound1) or string_find(msg, s_item_bound2) or string_find(msg, s_item_bound3)) then
+							show = nil
+							break
+						end
 					end
+
+				else
+
+					if (not tooltip.owner or not tooltip.bag or not tooltip.slot) then
+						tooltip.owner, tooltip.bag,tooltip.slot = self, self.bag, self:GetID()
+						tooltip:SetOwner(tooltip.owner, "ANCHOR_NONE")
+						tooltip:SetBagItem(tooltip.bag, tooltip.slot)
+					end
+
+					for i = 2,6 do
+						local line = _G[tooltipName.."TextLeft"..i]
+						if (not line) then
+							break
+						end
+
+						local msg = line:GetText() or ""
+						if (string_find(msg, s_item_bound1) or string_find(msg, s_item_bound2) or string_find(msg, s_item_bound3)) then
+							show = nil
+							break
+						end
+					end
+
 				end
+
 			end
 
 			-- Item isn't bound, decide the label

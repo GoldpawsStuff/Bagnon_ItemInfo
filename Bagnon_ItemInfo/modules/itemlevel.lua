@@ -29,6 +29,7 @@ local cache = {}
 
 -- Speed!
 local _G = _G
+local ipairs = ipairs
 local string_match = string.match
 local tonumber = tonumber
 
@@ -82,48 +83,95 @@ Private.AddUpdater(Module, function(self)
 		-- but only retail tooltips need it.
 		if (isgear and retail) or (isbag) then
 
-			if (not tooltip.owner or not tooltip.bag or not tooltip.slot) then
-				tooltip.owner, tooltip.bag,tooltip.slot = self, self.bag, self:GetID()
-				tooltip:SetOwner(tooltip.owner, "ANCHOR_NONE")
-				tooltip:SetBagItem(tooltip.bag, tooltip.slot)
-			end
+			if (retail) then
 
-			if (isgear) then
-				for i = 2,3 do
-					local line = _G[tooltipName.."TextLeft"..i]
-					if (not line) then
-						break
-					end
+				local tooltipData = C_TooltipInfo.GetBagItem(self.bag, self:GetID())
 
-					local itemlevel = string_match(line:GetText() or "", s_item_level)
-					if (itemlevel) then
-						itemlevel = tonumber(itemlevel)
-						if (itemlevel > 0) then
-							message = itemlevel
+				-- Assign data to 'type' and 'guid' fields.
+				TooltipUtil.SurfaceArgs(tooltipData)
+
+				-- Assign data to 'leftText' fields.
+				for _, line in ipairs(tooltipData.lines) do
+					TooltipUtil.SurfaceArgs(line)
+				end
+
+				if (isgear) then
+					for i = 2,3 do
+						local msg = tooltipData.lines[i].leftText
+						if (not msg) then break end
+
+						local itemlevel = string_match(msg, s_item_level)
+						if (itemlevel) then
+							itemlevel = tonumber(itemlevel)
+							if (itemlevel > 0) then
+								message = itemlevel
+							end
+							break
 						end
-						break
 					end
 				end
-			end
 
-			if (isbag) then
-				for i = 3,4 do
-					local line = _G[tooltipName.."TextLeft"..i]
-					if (not line) then
-						break
-					end
+				if (isbag) then
+					for i = 3,4 do
+						local msg = tooltipData.lines[i].leftText
+						if (not msg) then break end
 
-					local numslots = string_match(line:GetText() or "", s_num_slots)
-					if (numslots) then
-						numslots = tonumber(numslots)
-						if (numslots > 0) then
-							message = numslots
+						local numslots = string_match(msg, s_num_slots)
+						if (numslots) then
+							numslots = tonumber(numslots)
+							if (numslots > 0) then
+								message = numslots
+							end
+							break
 						end
-						break
 					end
 				end
-			end
 
+			else
+
+				if (not tooltip.owner or not tooltip.bag or not tooltip.slot) then
+					tooltip.owner, tooltip.bag,tooltip.slot = self, self.bag, self:GetID()
+					tooltip:SetOwner(tooltip.owner, "ANCHOR_NONE")
+					tooltip:SetBagItem(tooltip.bag, tooltip.slot)
+				end
+
+				if (isgear) then
+					for i = 2,3 do
+						local line = _G[tooltipName.."TextLeft"..i]
+						if (not line) then
+							break
+						end
+
+						local itemlevel = string_match(line:GetText() or "", s_item_level)
+						if (itemlevel) then
+							itemlevel = tonumber(itemlevel)
+							if (itemlevel > 0) then
+								message = itemlevel
+							end
+							break
+						end
+					end
+				end
+
+				if (isbag) then
+					for i = 3,4 do
+						local line = _G[tooltipName.."TextLeft"..i]
+						if (not line) then
+							break
+						end
+
+						local numslots = string_match(line:GetText() or "", s_num_slots)
+						if (numslots) then
+							numslots = tonumber(numslots)
+							if (numslots > 0) then
+								message = numslots
+							end
+							break
+						end
+					end
+				end
+
+			end
 		end
 
 	end
