@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.45-Release] 2022-12-08
+### Fixed
+- Fixed an issue in retail with items that had less tooltipData than expected.
+
 ## [2.0.44-Release] 2022-11-25
 ### Changed
 - Now only uses the old tooltip scanning in the classic versions of WoW.
