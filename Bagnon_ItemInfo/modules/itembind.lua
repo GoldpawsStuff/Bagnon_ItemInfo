@@ -117,7 +117,7 @@ Private.AddUpdater(Module, function(self)
 					end
 
 					for i = 2,6 do
-						local msg = tooltipData.lines[i].leftText
+						local msg = tooltipData.lines[i] and tooltipData.lines[i].leftText
 						if (not msg) then break end
 
 						if (string_find(msg, s_item_bound1) or string_find(msg, s_item_bound2) or string_find(msg, s_item_bound3)) then
