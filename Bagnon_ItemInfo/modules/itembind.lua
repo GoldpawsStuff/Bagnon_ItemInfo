@@ -87,7 +87,7 @@ Private.AddUpdater(Module, function(self)
 
 			-- Only retail returns this info, and not always accurately
 			if (retail) then
-				local bag, slot = self.bag, self:GetID()
+				local bag, slot = self:GetBag(), self:GetID()
 				if (C_Container_GetContainerItemInfo) then
 					local containerInfo = C_Container_GetContainerItemInfo(bag,slot)
 					if (containerInfo) then
@@ -106,7 +106,7 @@ Private.AddUpdater(Module, function(self)
 
 				if (retail) then
 
-					local tooltipData = C_TooltipInfo.GetBagItem(self.bag, self:GetID())
+					local tooltipData = C_TooltipInfo.GetBagItem(self:GetBag(), self:GetID())
 
 					-- Assign data to 'type' and 'guid' fields.
 					TooltipUtil.SurfaceArgs(tooltipData)
@@ -129,7 +129,7 @@ Private.AddUpdater(Module, function(self)
 				else
 
 					if (not tooltip.owner or not tooltip.bag or not tooltip.slot) then
-						tooltip.owner, tooltip.bag,tooltip.slot = self, self.bag, self:GetID()
+						tooltip.owner, tooltip.bag,tooltip.slot = self, self:GetBag(), self:GetID()
 						tooltip:SetOwner(tooltip.owner, "ANCHOR_NONE")
 						tooltip:SetBagItem(tooltip.bag, tooltip.slot)
 					end
