@@ -32,13 +32,9 @@ local _G = _G
 local ipairs = ipairs
 local string_find = string.find
 
--- WoW API
-local GetContainerItemInfo = GetContainerItemInfo
-
--- WoW10 API
-local C_Container_GetContainerItemInfo = C_Container and C_Container.GetContainerItemInfo
-
+-- Addon cache
 local retail = Private.IsRetail
+local wrath = Private.IsWrath
 local tooltip = Private.tooltip
 local tooltipName = Private.tooltipName
 
@@ -70,6 +66,12 @@ local colors = {
 	[7] = { 79/255, 196/255, 225/255 }, -- Heirloom
 	[8] = { 79/255, 196/255, 225/255 } -- Blizzard
 }
+for i = 0, (retail and Enum.ItemQualityMeta.NumValues or NUM_LE_ITEM_QUALITYS) - 1 do
+	if (not colors[i]) then
+		local r, g, b = GetItemQualityColor(i)
+		colors[i] = { r, g, b }
+	end
+end
 
 Private.cache[Module] = cache
 Private.AddUpdater(Module, function(self)
@@ -84,19 +86,11 @@ Private.AddUpdater(Module, function(self)
 		if (quality and quality > 1) and (bind == 2 or bind == 3) then
 
 			local show = true
+			local bag, slot = self:GetBag(), self:GetID()
 
-			-- Only retail returns this info, and not always accurately
-			if (retail) then
-				local bag, slot = self:GetBag(), self:GetID()
-				if (C_Container_GetContainerItemInfo) then
-					local containerInfo = C_Container_GetContainerItemInfo(bag,slot)
-					if (containerInfo) then
-						bound = containerInfo.isBound
-					end
-				else
-					_, _, _, _, _, _, _, _, _, _, bound = GetContainerItemInfo(bag, slot)
-				end
-				if (bound) then
+			if (retail or wrath) then
+				local containerInfo = C_Container.GetContainerItemInfo(bag,slot)
+				if (containerInfo and containerInfo.isBound) then
 					show = nil
 				end
 			end
@@ -106,7 +100,7 @@ Private.AddUpdater(Module, function(self)
 
 				if (retail) then
 
-					local tooltipData = C_TooltipInfo.GetBagItem(self:GetBag(), self:GetID())
+					local tooltipData = C_TooltipInfo.GetBagItem(bag,slot)
 
 					-- Assign data to 'type' and 'guid' fields.
 					TooltipUtil.SurfaceArgs(tooltipData)
@@ -129,7 +123,7 @@ Private.AddUpdater(Module, function(self)
 				else
 
 					if (not tooltip.owner or not tooltip.bag or not tooltip.slot) then
-						tooltip.owner, tooltip.bag,tooltip.slot = self, self:GetBag(), self:GetID()
+						tooltip.owner, tooltip.bag,tooltip.slot = self, bag, slot
 						tooltip:SetOwner(tooltip.owner, "ANCHOR_NONE")
 						tooltip:SetBagItem(tooltip.bag, tooltip.slot)
 					end

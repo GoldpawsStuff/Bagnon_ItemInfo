@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.49-Release] 2023-02-28
+### Changed
+- The Wrath version should take better advantage of blizzard's 10.0.2 bag API which was ported to Wrath in 3.4.1 now.
+
 ## [2.0.48-Release] 2023-01-26
 - Updated for WoW 10.0.5.
 
