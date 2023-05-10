@@ -76,11 +76,14 @@ end
 Private.cache[Module] = cache
 Private.AddUpdater(Module, function(self)
 
-	local message, color, mult
+	local message, color, mult, _
 
 	if (self.hasItem and BagnonItemInfo_DB.enableItemBind) then
 
 		local quality, bind = self.info.quality, self.info.bind
+		if (not bind) then
+			_,_,_,_,_,_,_,_,_,_,_,_,_, bind = GetItemInfo(self.info.hyperlink)
+		end
 
 		-- Item is BoE or BoU, has it been bound to the player yet?
 		if (quality and quality > 1) and (bind == 2 or bind == 3) then

@@ -57,4 +57,7 @@ Private.AddUpdater(Module, function(self)
 end)
 
 -- Also need to hook this to locked updates
-hooksecurefunc(Bagnon.ItemSlot or Bagnon.Item, "SetLocked", Private.updatesByModule[Module])
+local item = Bagnon.ItemSlot or Bagnon.Item
+local method = item.SetLocked and "SetLocked" or item.UpdateLocked and "UpdateLocked"
+
+hooksecurefunc(item, method, Private.updatesByModule[Module])
