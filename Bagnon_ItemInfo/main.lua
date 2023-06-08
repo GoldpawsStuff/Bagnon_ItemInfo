@@ -25,7 +25,7 @@
 --]]
 local Addon, Private =  ...
 if (Private.Incompatible) then
-	print("|cffff1111"..Addon.." was auto-disabled.")
+	--print("|cffff1111"..Addon.." was auto-disabled.")
 	return
 end
 
