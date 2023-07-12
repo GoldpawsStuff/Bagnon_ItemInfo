@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.55-Release] 2023-07-12
+- Bumped to Retail Client Patch 10.1.5.
+
 ## [2.0.54-Release] 2023-06-21
 - Bumped to Wrath Classic Client Patch 3.4.2.
 
