@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.57-Release] 2023-07-25
+### Fixed
+- Fixed issues occurring with item caches resulting in missing item levels with Bagnon 10.1.3 and higher.
+
 ## [2.0.56-Release] 2023-07-22
 ### Changed
 - Updated addon listing icon and text format.

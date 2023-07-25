@@ -25,6 +25,10 @@
 --]]
 local Addon, Private =  ...
 local Module = Bagnon:NewModule("Bagnon_ItemLevel")
+
+local Cache = LibStub("LibItemCache-2.0")
+local Container = LibStub("C_Everywhere").Container
+
 local cache = {}
 
 -- Speed!
@@ -83,8 +87,16 @@ Private.AddUpdater(Module, function(self)
 		local ispet = battlepetclass and class == battlepetclass
 
 		-- We only want quality coloring on item- and pet levels, not bag slots.
-		if (isgear or ispet) and (BagnonItemInfo_DB.enableRarityColoring) then
-			color = quality and colors[quality]
+		if (isgear or ispet) then
+			if (BagnonItemInfo_DB.enableRarityColoring) then
+				color = quality and colors[quality]
+			end
+			-- Update the bagnon cache
+			if (not level and not self.info.link) then
+				self.info.link = Container.GetContainerItemLink(self:GetBag(), self:GetID())
+				self.info = Cache:RestoreItemData(self.info)
+				level = self.info.level
+			end
 			message = level
 		end
 
@@ -95,27 +107,29 @@ Private.AddUpdater(Module, function(self)
 			if (retail) then
 
 				local tooltipData = C_TooltipInfo.GetBagItem(self:GetBag(), self:GetID())
+				if (tooltipData) then
 
-				-- Assign data to 'type' and 'guid' fields.
-				TooltipUtil.SurfaceArgs(tooltipData)
+					-- Assign data to 'type' and 'guid' fields.
+					TooltipUtil.SurfaceArgs(tooltipData)
 
-				-- Assign data to 'leftText' fields.
-				for _, line in ipairs(tooltipData.lines) do
-					TooltipUtil.SurfaceArgs(line)
-				end
+					-- Assign data to 'leftText' fields.
+					for _, line in ipairs(tooltipData.lines) do
+						TooltipUtil.SurfaceArgs(line)
+					end
 
-				if (isgear) then
-					for i = 2,3 do
-						local msg = tooltipData.lines[i] and tooltipData.lines[i].leftText
-						if (not msg) then break end
+					if (isgear) then
+						for i = 2,3 do
+							local msg = tooltipData.lines[i] and tooltipData.lines[i].leftText
+							if (not msg) then break end
 
-						local itemlevel = string_match(msg, s_item_level)
-						if (itemlevel) then
-							itemlevel = tonumber(itemlevel)
-							if (itemlevel > 0) then
-								message = itemlevel
+							local itemlevel = string_match(msg, s_item_level)
+							if (itemlevel) then
+								itemlevel = tonumber(itemlevel)
+								if (itemlevel > 0) then
+									message = itemlevel
+								end
+								break
 							end
-							break
 						end
 					end
 				end
