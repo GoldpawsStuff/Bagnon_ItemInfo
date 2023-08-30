@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.59-Release] 2023-08-30
+### Fixed
+- Garbage desaturation and darkening should be more consistent now and not "get stuck" anymore.
+
 ## [2.0.58-Release] 2023-08-24
 - Updated for Classic client patch 1.14.4.
 

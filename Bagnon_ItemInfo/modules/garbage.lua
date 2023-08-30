@@ -61,3 +61,18 @@ local item = Bagnon.ItemSlot or Bagnon.Item
 local method = item.SetLocked and "SetLocked" or item.UpdateLocked and "UpdateLocked"
 
 hooksecurefunc(item, method, Private.updatesByModule[Module])
+
+local groupMethod = Bagnon.ContainerItemGroup and Bagnon.ContainerItemGroup.ITEM_LOCK_CHANGED
+if (groupMethod) then
+	local groupUpdate = function(self,_,bag,slot)
+		if (not self:Delaying("Layout")) then
+			bag = self.buttons[bag]
+			slot = bag and bag[slot]
+			if (slot) then
+				Private.updatesByModule[Module](slot)
+				--slot:UpdateLocked()
+			end
+		end
+	end
+	hooksecurefunc(Bagnon.ContainerItemGroup, "ITEM_LOCK_CHANGED", groupUpdate)
+end
