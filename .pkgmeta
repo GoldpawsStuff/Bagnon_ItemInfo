@@ -1,6 +1,11 @@
 package-as: Bagnon_ItemInfo
 enable-nolib-creation: no
 
+externals:
+    Libs/TaintLess:
+        url: https://www.townlong-yak.com/addons.git/taintless
+        commit: default
+
 move-folders:
     Bagnon_ItemInfo/Bagnon_ItemInfo: Bagnon_ItemInfo
 
