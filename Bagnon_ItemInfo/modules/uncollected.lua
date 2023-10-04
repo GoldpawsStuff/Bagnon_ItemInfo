@@ -50,7 +50,7 @@ Private.AddUpdater(Module, function(self)
 
 		local id, quality = self.info.id or self.info.itemID, self.info.quality
 
-		if (quality and quality > 1 and not PlayerHasTransmog(id --[[, itemAppearanceModID ]])) then
+		if (quality ~= nil and quality >= 0 and not PlayerHasTransmog(id --[[, itemAppearanceModID ]])) then
 
 			if (not tooltip.owner or not tooltip.bag or not tooltip.slot) then
 				tooltip.owner, tooltip.bag,tooltip.slot = self, self:GetBag(), self:GetID()
