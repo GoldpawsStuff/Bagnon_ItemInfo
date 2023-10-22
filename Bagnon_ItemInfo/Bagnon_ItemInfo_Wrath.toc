@@ -14,10 +14,18 @@
 ## RequiredDeps: Bagnon
 ## SavedVariables: BagnonItemInfo_DB
 
-embeds.xml
-dispatcher.lua
-defaults.lua
-main.lua
-modules\garbage.lua
-modules\itembind.lua
-modules\itemlevel.lua
+# Libraries
+Embeds.xml
+
+# Localization
+Locale\Locale.xml
+
+# Core
+Dispatcher.lua
+Defaults.lua
+Main.lua
+
+# Modules
+Modules\Garbage.lua
+Modules\Itembind.lua
+Modules\Itemlevel.lua
