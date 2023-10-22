@@ -2,7 +2,15 @@ package-as: Bagnon_ItemInfo
 enable-nolib-creation: no
 
 externals:
-    Libs/TaintLess:
+    Bagnon_ItemInfo/Libs/LibStub:
+        url: svn://svn.wowace.com/wow/libstub/mainline/trunk
+        tag: latest
+    Bagnon_ItemInfo/Libs/CallbackHandler-1.0:
+        url: svn://svn.wowace.com/wow/callbackhandler/mainline/trunk/CallbackHandler-1.0
+        tag: latest
+    Bagnon_ItemInfo/Libs/AceConfig-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceConfig-3.0
+    Bagnon_ItemInfo/Libs/AceGUI-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceGUI-3.0
+    Bagnon_ItemInfo/Libs/TaintLess:
         url: https://www.townlong-yak.com/addons.git/taintless
         commit: default
 
