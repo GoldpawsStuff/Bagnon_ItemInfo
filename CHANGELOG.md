@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] 2023-10-22
+## [2.1.63-Release] 2023-10-22
 ### Added
 - Added a a graphical options menu accessible by typing `/bif` with no arguments.
 
