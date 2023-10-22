@@ -113,7 +113,8 @@ local optionDB = {
 		footer = {
 			order = 10000,
 			type = "header",
-			name = ""
+			name = "",
+			hidden = function(info) return Private.IsRetail end
 		}
 	}
 }
@@ -121,7 +122,7 @@ local optionDB = {
 local addonName = string.gsub(Addon, "_", " ")
 
 AceConfigRegistry:RegisterOptionsTable(addonName, optionDB)
-AceConfigDialog:SetDefaultSize(addonName, 400, 220)
+AceConfigDialog:SetDefaultSize(addonName, 400, 226)
 
 SLASH_BAGNON_ITEMLEVEL1 = "/bif"
 SlashCmdList["BAGNON_ITEMLEVEL"] = function(msg)
