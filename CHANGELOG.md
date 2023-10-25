@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.65-Release] 2023-10-25
+### Added
+- Added settings for garbage desaturation and darkening to the new `/bif` menu. This setting is currently not available through chat commands.
+
+### Fixed
+- Garbage desaturation should now properly function again.
+
 ## [2.1.64-Release] 2023-10-23
 ### Fixed
 - AceLocale should now properly be embedded in the addon, which I forgot in the previous update thus breaking the whole thing. You guys don't feed me enough, my concentration is failing!
