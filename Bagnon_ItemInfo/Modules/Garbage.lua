@@ -30,27 +30,39 @@ local cache = {}
 Private.cache[Module] = cache
 Private.AddUpdater(Module, function(self)
 
-	if (self.hasItem and BagnonItemInfo_DB.enableGarbage and self.info.quality == 0 and not self.info.locked) then
+	if (self.hasItem and BagnonItemInfo_DB.enableGarbage and self.info.quality == 0 and not(self.locked or self.info.isLocked)) then
 
 		local overlay = cache[self]
-		if (not overlay) then
-			overlay = self:CreateTexture()
-			overlay.icon = self.icon or _G[self:GetName().."IconTexture"]
-			overlay:Hide()
-			overlay:SetDrawLayer("ARTWORK")
-			overlay:SetAllPoints(overlay.icon)
-			overlay:SetColorTexture(.04, .013333333, .004705882, .6)
-			cache[self] = overlay
+
+		if (BagnonItemInfo_DB.garbageOverlay) then
+			if (not overlay) then
+				overlay = self:CreateTexture()
+				overlay.icon = self.icon or _G[self:GetName().."IconTexture"]
+				overlay:Hide()
+				overlay:SetDrawLayer("ARTWORK")
+				overlay:SetAllPoints(overlay.icon)
+				overlay:SetColorTexture(.04, .013333333, .004705882, .6)
+				cache[self] = overlay
+			end
+			overlay:SetAlpha(.35 + .65*BagnonItemInfo_DB.garbageOverlayAlpha)
+			overlay:Show()
+		else
+			if (overlay) then
+				overlay:Hide()
+			end
 		end
 
-		overlay:Show()
-		SetItemButtonDesaturated(self, true)
+		if (BagnonItemInfo_DB.garbageDesaturation) then
+			SetItemButtonDesaturated(self, true)
+		else
+			SetItemButtonDesaturated(self, (self.locked or self.info.isLocked))
+		end
 
 	else
 		local overlay = cache[self]
 		if (overlay) then
 			overlay:Hide()
-			SetItemButtonDesaturated(self, self.info.locked)
+			SetItemButtonDesaturated(self, (self.locked or self.info.isLocked))
 		end
 	end
 
@@ -58,9 +70,11 @@ end)
 
 -- Also need to hook this to locked updates
 local item = Bagnon.ItemSlot or Bagnon.Item
-local method = item.SetLocked and "SetLocked" or item.UpdateLocked and "UpdateLocked"
-
-hooksecurefunc(item, method, Private.updatesByModule[Module])
+for _,method in next,{ "SetLocked", "UpdateLocked", "UpdateSearch" } do
+	if (item[method]) then
+		hooksecurefunc(item, method, Private.updatesByModule[Module])
+	end
+end
 
 local groupMethod = Bagnon.ContainerItemGroup and Bagnon.ContainerItemGroup.ITEM_LOCK_CHANGED
 if (groupMethod) then
