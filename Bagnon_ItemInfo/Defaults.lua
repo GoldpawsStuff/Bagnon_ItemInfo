@@ -35,13 +35,34 @@ local L = LibStub("AceLocale-3.0"):GetLocale((...))
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
 
-BagnonItemInfo_DB = {
+local defaults = {
 	enableItemLevel = true,
 	enableItemBind = true,
 	enableGarbage = true,
+	garbageDesaturation = true,
+	garbageOverlay = true,
+	garbageOverlayAlpha = 1,
 	enableUncollected = true,
 	enableRarityColoring = true
 }
+
+BagnonItemInfo_DB = CopyTable(defaults)
+
+-- Blizzard overwrites the entire table with the saved table,
+-- so newly added options will all be set to nil.
+-- We need to manually validate the saved settings
+-- to make sure new values are set to their defaults.
+local validator = CreateFrame("Frame")
+validator:RegisterEvent("ADDON_LOADED")
+validator:SetScript("OnEvent", function(self, event, addon)
+	if (addon ~= Addon) then return end
+	self:UnregisterAllEvents()
+	for k,v in next,defaults do
+		if (BagnonItemInfo_DB[k] == nil) then
+			BagnonItemInfo_DB[k] = v
+		end
+	end
+end)
 
 local setter = function(info,val)
 	BagnonItemInfo_DB[info[#info]] = val
@@ -57,11 +78,11 @@ end
 local optionDB = {
 	type = "group",
 	args = {
-		header = {
-			order = 1,
-			type = "header",
-			name = ""
-		},
+		--header = {
+		--	order = 1,
+		--	type = "header",
+		--	name = ""
+		--},
 		enableItemLevel = {
 			order = 10,
 			name = L["Show item levels"],
@@ -92,10 +113,40 @@ local optionDB = {
 		},
 		enableGarbage = {
 			order = 40,
-			name = L["Desaturate garbage items"],
+			name = L["Desaturate and tone down garbage items"],
 			desc = L["Desaturate and tone down the brightness of garbage items."],
 			width = "full",
 			type = "toggle",
+			set = setter,
+			get = getter
+		},
+		garbageDesaturation = {
+			order = 41,
+			name = L["Desaturate"],
+			desc = L["Desaturate garbage items"],
+			width = "full",
+			type = "toggle",
+			hidden = function(info) return not BagnonItemInfo_DB.enableGarbage end,
+			set = setter,
+			get = getter
+		},
+		garbageOverlay = {
+			order = 42,
+			name = L["Darken"],
+			desc = L["Tone down the brightness of garbage items."],
+			width = "full",
+			type = "toggle",
+			hidden = function(info) return not BagnonItemInfo_DB.enableGarbage end,
+			set = setter,
+			get = getter
+		},
+		garbageOverlayAlpha = {
+			order = 43,
+			name = L["Level of darkening"],
+			desc = L["Set the opacity of the darkening layer."],
+			width = "full",
+			type = "range", min = .1, max = 1, step = .05,
+			hidden = function(info) return not BagnonItemInfo_DB.enableGarbage or not BagnonItemInfo_DB.garbageOverlay end,
 			set = setter,
 			get = getter
 		},
@@ -109,12 +160,6 @@ local optionDB = {
 			hidden = function(info) return not Private.IsRetail end,
 			set = setter,
 			get = getter
-		},
-		footer = {
-			order = 10000,
-			type = "header",
-			name = "",
-			hidden = function(info) return Private.IsRetail end
 		}
 	}
 }
@@ -122,7 +167,7 @@ local optionDB = {
 local addonName = string.gsub(Addon, "_", " ")
 
 AceConfigRegistry:RegisterOptionsTable(addonName, optionDB)
-AceConfigDialog:SetDefaultSize(addonName, 400, 226)
+AceConfigDialog:SetDefaultSize(addonName, 400, 300)
 
 SLASH_BAGNON_ITEMLEVEL1 = "/bif"
 SlashCmdList["BAGNON_ITEMLEVEL"] = function(msg)
