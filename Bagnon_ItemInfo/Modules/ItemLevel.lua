@@ -31,11 +31,16 @@ local Container = LibStub("C_Everywhere").Container
 
 local cache = {}
 
--- Speed!
+-- Lua API
 local _G = _G
 local ipairs = ipairs
+local string_gsub = string.gsub
 local string_match = string.match
 local tonumber = tonumber
+
+-- WoW API
+local C_TooltipInfo, TooltipUtil = C_TooltipInfo, TooltipUtil
+local CreateFrame, GetItemInfoInstant, GetItemQualityColor = CreateFrame, GetItemInfoInstant, GetItemQualityColor
 
 local retail = Private.IsRetail
 local tooltip = Private.tooltip
@@ -46,8 +51,8 @@ local battlepetclass = Enum.ItemClass.Battlepet
 local font_object = NumberFont_Outline_Med or NumberFontNormal
 
 -- Search patterns
-local s_item_level = "^" .. string.gsub(ITEM_LEVEL, "%%d", "(%%d+)")
-local s_num_slots = "^" .. (string.gsub(string.gsub(CONTAINER_SLOTS, "%%([%d%$]-)d", "(%%d+)"), "%%([%d%$]-)s", "%.+"))
+local s_item_level = "^" .. string_gsub(ITEM_LEVEL, "%%d", "(%%d+)")
+local s_num_slots = "^" .. (string_gsub(string_gsub(CONTAINER_SLOTS, "%%([%d%$]-)d", "(%%d+)"), "%%([%d%$]-)s", "%.+"))
 
 -- Custom color cache
 -- Allows us control, gives us speed.
@@ -72,9 +77,10 @@ end
 Private.cache[Module] = cache
 Private.AddUpdater(Module, function(self)
 
+	local db = BagnonItemInfo_DB
 	local message, color, _
 
-	if (self.hasItem and BagnonItemInfo_DB.enableItemLevel) then
+	if (self.hasItem and db.enableItemLevel) then
 
 		-- https://wowpedia.fandom.com/wiki/Enum.InventoryType
 		local class, equip, level, quality = self.info.class, self.info.equip, self.info.level, self.info.quality
@@ -88,7 +94,7 @@ Private.AddUpdater(Module, function(self)
 
 		-- We only want quality coloring on item- and pet levels, not bag slots.
 		if (isgear or ispet) then
-			if (BagnonItemInfo_DB.enableRarityColoring) then
+			if (db.enableRarityColoring) then
 				color = quality and colors[quality]
 			end
 			-- Update the bagnon cache

@@ -27,14 +27,19 @@ local Addon, Private =  ...
 local Module = Bagnon:NewModule("Bagnon_Garbage")
 local cache = {}
 
+-- WoW API
+local SetItemButtonDesaturated = SetItemButtonDesaturated
+
 Private.cache[Module] = cache
 Private.AddUpdater(Module, function(self)
 
-	if (self.hasItem and BagnonItemInfo_DB.enableGarbage and self.info.quality == 0 and not(self.locked or self.info.isLocked)) then
+	local db = BagnonItemInfo_DB
+
+	if (self.hasItem and db.enableGarbage and self.info.quality == 0 and not(self.locked or self.info.isLocked)) then
 
 		local overlay = cache[self]
 
-		if (BagnonItemInfo_DB.garbageOverlay) then
+		if (db.garbageOverlay) then
 			if (not overlay) then
 				overlay = self:CreateTexture()
 				overlay.icon = self.icon or _G[self:GetName().."IconTexture"]
@@ -44,7 +49,7 @@ Private.AddUpdater(Module, function(self)
 				overlay:SetColorTexture(.04, .013333333, .004705882, .6)
 				cache[self] = overlay
 			end
-			overlay:SetAlpha(.35 + .65*BagnonItemInfo_DB.garbageOverlayAlpha)
+			overlay:SetAlpha(.35 + .65*db.garbageOverlayAlpha)
 			overlay:Show()
 		else
 			if (overlay) then
@@ -52,7 +57,7 @@ Private.AddUpdater(Module, function(self)
 			end
 		end
 
-		if (BagnonItemInfo_DB.garbageDesaturation) then
+		if (db.garbageDesaturation) then
 			SetItemButtonDesaturated(self, true)
 		else
 			SetItemButtonDesaturated(self, (self.locked or self.info.isLocked))
@@ -84,7 +89,6 @@ if (groupMethod) then
 			slot = bag and bag[slot]
 			if (slot) then
 				Private.updatesByModule[Module](slot)
-				--slot:UpdateLocked()
 			end
 		end
 	end

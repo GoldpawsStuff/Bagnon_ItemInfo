@@ -167,7 +167,7 @@ local optionDB = {
 local addonName = string.gsub(Addon, "_", " ")
 
 AceConfigRegistry:RegisterOptionsTable(addonName, optionDB)
-AceConfigDialog:SetDefaultSize(addonName, 400, 300)
+AceConfigDialog:SetDefaultSize(addonName, 404, 306)
 
 SLASH_BAGNON_ITEMLEVEL1 = "/bif"
 SlashCmdList["BAGNON_ITEMLEVEL"] = function(msg)

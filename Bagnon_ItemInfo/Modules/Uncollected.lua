@@ -27,7 +27,7 @@ local Addon, Private =  ...
 local Module = Bagnon:NewModule("Bagnon_Uncollected")
 local cache = {}
 
--- Speed!
+-- Lua API
 local _G = _G
 local string_find = string.find
 
