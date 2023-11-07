@@ -1,4 +1,4 @@
-## Interface: 100107
+## Interface: 100200
 ## IconTexture: Interface\Addons\BagBrother\Art\Bagnon-Plugin.tga
 
 ## Plain Title: Bagnon ItemInfo
