@@ -1,8 +1,19 @@
-# Bagnon_ItemInfo Change Log
+# Bagnon ItemLevel Plus Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [2.2.70-Release] 2023-12-15
+### Added
+- Added our options menu to the blizzard interface options addons menu.
+- Added the chat command `/bil` to directly open options menu. This does not conflict with the same chat command in the addon Bagnon ItemLevel, as that one simply does not load when this one is enabled.
+
+### Changed
+- Rebranded the addon and its option menu entries to **Bagnon ItemLevel Plus** as this better indicates what it does. The old name "ItemInfo" was simply too generic and undescriptive. The title alone should give a good indication of what an addon does.
+
+### Removed
+- Fully removed the old system to configure it through chat commands. The command remains, but now only and always opens the options menu window.
 
 ## [2.1.69-Release] 2023-11-17
 - Updated for WoW Client Patch 1.15.0.

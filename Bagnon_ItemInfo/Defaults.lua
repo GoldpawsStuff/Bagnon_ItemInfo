@@ -35,6 +35,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale((...))
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
 
+-- Addon default settings
 local defaults = {
 	enableItemLevel = true,
 	enableItemBind = true,
@@ -78,11 +79,6 @@ end
 local optionDB = {
 	type = "group",
 	args = {
-		--header = {
-		--	order = 1,
-		--	type = "header",
-		--	name = ""
-		--},
 		enableItemLevel = {
 			order = 10,
 			name = L["Show item levels"],
@@ -164,60 +160,57 @@ local optionDB = {
 	}
 }
 
-local addonName = string.gsub(Addon, "_", " ")
+local GenerateOptionsMenu = function()
 
-AceConfigRegistry:RegisterOptionsTable(addonName, optionDB)
-AceConfigDialog:SetDefaultSize(addonName, 404, 306)
-
-SLASH_BAGNON_ITEMLEVEL1 = "/bif"
-SlashCmdList["BAGNON_ITEMLEVEL"] = function(msg)
-	if (not msg) then
-		return
+	-- Bagnon doesn't create its menu until opening it,
+	-- and we want our menu entry lister after theirs.
+	-- To my knowledge we can't safely resort the blizz menu.
+	if (not IsAddOnLoaded("Bagnon_Config")) then
+		LoadAddOn("Bagnon_Config")
 	end
 
-	msg = string.gsub(msg, "^%s+", "")
-	msg = string.gsub(msg, "%s+$", "")
-	msg = string.gsub(msg, "%s+", " ")
+	-- Menu category listing display name
+	local name = [[|TInterface\Addons\BagBrother\Art\Bagnon-Plugin:16:16|t Bagnon |cffffffffilvl+|r]]
 
-	local action, element = string.split(" ", msg)
-	local db = BagnonItemInfo_DB
+	-- Menu category header
+	local appName = [[|TInterface\Addons\BagBrother\Art\Bagnon-Plugin:16:16|t Bagnon |cfffafafaItemLevel +|r]]
 
-	if (not action or action == "") then
-		if (AceConfigRegistry:GetOptionsTable(addonName)) then
-			AceConfigDialog:Open(addonName)
-			return
+	AceConfigRegistry:RegisterOptionsTable(appName, optionDB)
+
+	-- Add the options table to
+	-- the interface addons options.
+	local frame, category = AceConfigDialog:AddToBlizOptions(appName, name)
+
+	-- Register a slash command that
+	-- opens to a separate window.
+	local ADDON = string.upper(Addon)
+
+	_G["SLASH_"..ADDON.."1"] = "/bil" -- same command used by Bagnon ItemLevel
+	_G["SLASH_"..ADDON.."2"] = "/bif" -- the old command, keeping it for compatibiliy
+
+	-- Just open the options window,
+	-- don't allow configration through commands.
+	SlashCmdList[ADDON] = function(msg)
+		if (InterfaceOptionsFrame) then
+			InterfaceOptionsFrame:Show()
+			InterfaceOptionsFrame_OpenToCategory(category)
+		else
+			SettingsPanel:Show()
+			SettingsPanel:OpenToCategory(category)
 		end
 	end
-
-	if (action == "enable") then
-		if (element == "itemlevel" or element == "ilvl") then
-			db.enableItemLevel = true
-		elseif (element == "boe" or element == "bind") then
-			db.enableItemBind = true
-		elseif (element == "junk" or element == "trash" or element == "garbage") then
-			db.enableGarbage = true
-		elseif (element == "eye" or element == "transmog" or element == "uncollected") then
-			db.enableUncollected = true
-		elseif (element == "color") then
-			db.enableRarityColoring = true
-		end
-
-	elseif (action == "disable") then
-		if (element == "itemlevel" or element == "ilvl") then
-			db.enableItemLevel = false
-		elseif (element == "boe" or element == "bind") then
-			db.enableItemBind = false
-		elseif (element == "junk" or element == "trash" or element == "garbage") then
-			db.enableGarbage = false
-		elseif (element == "eye" or element == "transmog" or element == "uncollected") then
-			db.enableUncollected = false
-		elseif (element == "color") then
-			db.enableRarityColoring = false
-		end
-	end
-
-	if (Private.Forceupdate) then
-		Private.Forceupdate()
-	end
-
 end
+
+-- Don't load the menu until first time entering the world.
+-- We might need to forcefully load an addon,
+-- so it's important to wait until that point.
+local loader = CreateFrame("Frame")
+loader:RegisterEvent("PLAYER_ENTERING_WORLD")
+loader:SetScript("OnEvent", function(self)
+
+	self:UnregisterAllEvents()
+	self:Hide()
+
+	GenerateOptionsMenu()
+
+end)
