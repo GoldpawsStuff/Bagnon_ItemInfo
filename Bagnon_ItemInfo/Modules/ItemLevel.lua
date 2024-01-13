@@ -84,7 +84,7 @@ Private.AddUpdater(Module, function(self)
 
 		-- https://wowpedia.fandom.com/wiki/Enum.InventoryType
 		local class, equip, level, quality = self.info.class, self.info.equip, self.info.level, self.info.quality
-		if (not equip) then
+		if (not equip and self.info.hyperlink) then
 			_,_,_,equip = GetItemInfoInstant(self.info.hyperlink)
 		end
 		local noequip = not equip or not _G[equip] or equip == "INVTYPE_BAG" or equip == "INVTYPE_NON_EQUIP" or equip == "INVTYPE_TABARD" or equip == "INVTYPE_AMMO" or equip == "INVTYPE_QUIVER" or equip == "INVTYPE_BODY"
