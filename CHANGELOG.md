@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.72-Release] 2024-01-17
+- Updated for WoW Client Patch 10.2.5.
+
 ## [2.2.71-Release] 2024-01-13
 ### Fixed
 - Fixed an issue that caused a bunch of bugs on logon, especially in Wrath and Classic.

@@ -114,15 +114,6 @@ Private.AddUpdater(Module, function(self)
 
 				local tooltipData = C_TooltipInfo.GetBagItem(self:GetBag(), self:GetID())
 				if (tooltipData) then
-
-					-- Assign data to 'type' and 'guid' fields.
-					TooltipUtil.SurfaceArgs(tooltipData)
-
-					-- Assign data to 'leftText' fields.
-					for _, line in ipairs(tooltipData.lines) do
-						TooltipUtil.SurfaceArgs(line)
-					end
-
 					if (isgear) then
 						for i = 2,3 do
 							local msg = tooltipData.lines[i] and tooltipData.lines[i].leftText
