@@ -86,7 +86,7 @@ Private.AddUpdater(Module, function(self)
 	if (self.hasItem and db.enableItemBind) then
 
 		local quality, bind = self.info.quality, self.info.bind
-		if (not bind) then
+		if (not bind and self.info.hyperlink) then
 			_,_,_,_,_,_,_,_,_,_,_,_,_, bind = GetItemInfo(self.info.hyperlink)
 		end
 
@@ -136,7 +136,6 @@ Private.AddUpdater(Module, function(self)
 						end
 
 						local msg = line:GetText() or ""
-						print(msg)
 						if (string_find(msg, s_item_bound1) or string_find(msg, s_item_bound2) or string_find(msg, s_item_bound3)) then
 							show = nil
 							break
