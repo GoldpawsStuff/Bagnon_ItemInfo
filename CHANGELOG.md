@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.78-Release] 2024-03-26
+### Changed
+- Uncommon rarity coloring should be a bit brighter and easier to spot now.
+
+### Fixed
+- The issue in retail where all items would get their itemlevel displayed has been fixed. We're bag to mostly showing equipable gear, battle pets and container slots again.
+
 ## [2.2.77-Release] 2024-03-22
 - Updated for WoW Client Patch 10.2.6.
 - Updated for WoW Client Patch 4.4.0.

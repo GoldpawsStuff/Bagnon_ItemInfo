@@ -59,7 +59,7 @@ local s_num_slots = "^" .. (string_gsub(string_gsub(CONTAINER_SLOTS, "%%([%d%$]-
 local colors = {
 	[0] = { 157/255, 157/255, 157/255 }, -- Poor
 	[1] = { 240/255, 240/255, 240/255 }, -- Common
-	[2] = { 30/255, 178/255, 0/255 }, -- Uncommon
+	[2] = { 30/255, 198/255, 0/255 }, -- Uncommon
 	[3] = { 0/255, 112/255, 221/255 }, -- Rare
 	[4] = { 163/255, 53/255, 238/255 }, -- Epic
 	[5] = { 225/255, 96/255, 0/255 }, -- Legendary
@@ -87,7 +87,7 @@ Private.AddUpdater(Module, function(self)
 		if (not equip and self.info.hyperlink) then
 			_,_,_,equip = GetItemInfoInstant(self.info.hyperlink)
 		end
-		local noequip = not equip or not _G[equip] or equip == "INVTYPE_BAG" or equip == "INVTYPE_NON_EQUIP" or equip == "INVTYPE_TABARD" or equip == "INVTYPE_AMMO" or equip == "INVTYPE_QUIVER" or equip == "INVTYPE_BODY"
+		local noequip = not equip or not _G[equip] or equip == "INVTYPE_BAG" or equip == "INVTYPE_NON_EQUIP" or equip == "INVTYPE_NON_EQUIP_IGNORE" or equip == "INVTYPE_TABARD" or equip == "INVTYPE_AMMO" or equip == "INVTYPE_QUIVER" or equip == "INVTYPE_BODY"
 		local isbag = equip == "INVTYPE_BAG"
 		local isgear = quality and quality > 0 and not noequip
 		local ispet = battlepetclass and class == battlepetclass
@@ -108,12 +108,13 @@ Private.AddUpdater(Module, function(self)
 
 		-- Only retail tooltips contain iteminfo,
 		-- but only retail tooltips need it.
-		if (isgear and retail) or (isbag) then
+		if (retail) and (isgear or isbag) then
 
 			if (retail) then
 
 				local tooltipData = C_TooltipInfo.GetBagItem(self:GetBag(), self:GetID())
 				if (tooltipData) then
+
 					if (isgear) then
 						for i = 2,3 do
 							local msg = tooltipData.lines[i] and tooltipData.lines[i].leftText
@@ -129,20 +130,20 @@ Private.AddUpdater(Module, function(self)
 							end
 						end
 					end
-				end
 
-				if (isbag) then
-					for i = 3,4 do
-						local msg = tooltipData.lines[i] and tooltipData.lines[i].leftText
-						if (not msg) then break end
+					if (isbag) then
+						for i = 3,4 do
+							local msg = tooltipData.lines[i] and tooltipData.lines[i].leftText
+							if (not msg) then break end
 
-						local numslots = string_match(msg, s_num_slots)
-						if (numslots) then
-							numslots = tonumber(numslots)
-							if (numslots > 0) then
-								message = numslots
+							local numslots = string_match(msg, s_num_slots)
+							if (numslots) then
+								numslots = tonumber(numslots)
+								if (numslots > 0) then
+									message = numslots
+								end
+								break
 							end
-							break
 						end
 					end
 				end
