@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] 2024-04-17
 ### Added
-- Added the option to set the minimum displayed item level from 1 to 40, with 10 being the default.
+- Added the option to set the minimum displayed item level from 1 to 60, with 11 being the default.
 
 ## [2.2.79-Release] 2024-04-03
 - Updated for WoW Client Patch 1.15.2.
