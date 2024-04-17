@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] 2024-04-17
+### Added
+- Added the option to set the minimum displayed item level from 1 to 40, with 10 being the default.
+
 ## [2.2.79-Release] 2024-04-03
 - Updated for WoW Client Patch 1.15.2.
 
