@@ -123,7 +123,7 @@ Private.AddUpdater(Module, function(self)
 							local itemlevel = string_match(msg, s_item_level)
 							if (itemlevel) then
 								itemlevel = tonumber(itemlevel)
-								if (itemlevel > 0) then
+								if (itemlevel >= db.minimumItemLevel) then
 									message = itemlevel
 								end
 								break
@@ -166,7 +166,7 @@ Private.AddUpdater(Module, function(self)
 						local itemlevel = string_match(line:GetText() or "", s_item_level)
 						if (itemlevel) then
 							itemlevel = tonumber(itemlevel)
-							if (itemlevel > 0) then
+							if (itemlevel >= db.minimumItemLevel) then
 								message = itemlevel
 							end
 							break
@@ -197,7 +197,7 @@ Private.AddUpdater(Module, function(self)
 
 	end
 
-	if (message) then
+	if (message and message >= db.minimumItemLevel) then
 
 		local label = cache[self]
 		if (not label) then

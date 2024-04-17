@@ -38,6 +38,7 @@ local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
 -- Addon default settings
 local defaults = {
 	enableItemLevel = true,
+	minimumItemLevel = 10,
 	enableItemBind = true,
 	enableGarbage = true,
 	garbageDesaturation = true,
@@ -85,6 +86,16 @@ local optionDB = {
 			desc = L["Toggle labels showing the item level of the item and the number of slots on containers."],
 			width = "full",
 			type = "toggle",
+			set = setter,
+			get = getter
+		},
+		minimumItemLevel = {
+			order = 11,
+			name = L["Minimum item level"],
+			desc = L["Set the minimum item level to display."],
+			width = "full",
+			type = "range", min = 1, max = 40, step = 1,
+			hidden = function(info) return not BagnonItemInfo_DB.enableItemLevel end,
 			set = setter,
 			get = getter
 		},
