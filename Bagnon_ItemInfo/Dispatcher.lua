@@ -58,7 +58,6 @@ Private.Forceupdate = function(module)
 			func(item)
 		end
 	end
-
 end
 
 -- Call all updates from all my plugins, then reset the tooltip.
