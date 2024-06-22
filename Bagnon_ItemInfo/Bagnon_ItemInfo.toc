@@ -1,4 +1,4 @@
-## Interface: 100206
+## Interface: 100207
 ## IconTexture: Interface\Addons\BagBrother\Art\Bagnon-Plugin.tga
 
 ## Plain Title: Bagnon ItemLevel Plus
