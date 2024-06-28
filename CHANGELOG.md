@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.2.81-Release] 2024-06-22
+## [2.2.81-Release] 2024-06-28
 - Updated for WoW Retail Client Patch 10.2.7.
 
 ## [2.2.80-Release] 2024-04-17
