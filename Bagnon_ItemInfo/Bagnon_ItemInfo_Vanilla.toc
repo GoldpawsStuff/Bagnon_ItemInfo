@@ -1,4 +1,4 @@
-## Interface: 11502
+## Interface: 11503
 
 ## Plain Title: Bagnon ItemLevel Plus
 ## Title: |TInterface/Addons/BagBrother/Art/Bagnon-Plugin:16:16|t Bagnon |cff20ff20ItemLevel|r |cffffffffPlus|r
