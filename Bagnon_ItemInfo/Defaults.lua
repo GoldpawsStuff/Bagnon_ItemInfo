@@ -176,8 +176,8 @@ local GenerateOptionsMenu = function()
 	-- Bagnon doesn't create its menu until opening it,
 	-- and we want our menu entry lister after theirs.
 	-- To my knowledge we can't safely resort the blizz menu.
-	if (not IsAddOnLoaded("Bagnon_Config")) then
-		LoadAddOn("Bagnon_Config")
+	if (not C_AddOns.IsAddOnLoaded("Bagnon_Config")) then
+		C_AddOns.LoadAddOn("Bagnon_Config")
 	end
 
 	-- Menu category listing display name
