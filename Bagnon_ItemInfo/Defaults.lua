@@ -35,6 +35,10 @@ local L = LibStub("AceLocale-3.0"):GetLocale((...))
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
 
+-- WoW 11.0.x
+local IsAddOnLoaded = IsAddOnLoaded or C_AddOns.IsAddOnLoaded
+local LoadAddOn = LoadAddOn or C_AddOns.LoadAddOn
+
 -- Addon default settings
 local defaults = {
 	enableItemLevel = true,
