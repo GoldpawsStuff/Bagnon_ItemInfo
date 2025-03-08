@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.85-Release] 2025-03-08
+- Updated for WoW Classic Era Client Patch 1.15.6.
+- Updated for WoW Retail Client Patch 11.1.0.
+
 ## [2.2.84-Release] 2024-09-02
 ### Fixed
 - Fixed a bug related to using the deprecated library LibItemCache-2.0.

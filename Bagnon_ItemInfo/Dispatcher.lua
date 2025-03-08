@@ -71,7 +71,9 @@ end
 
 -- Hook the updater
 if (not BAGNON_ITEMINFO_DISPATCHER) then
-	hooksecurefunc(Bagnon.ItemSlot or Bagnon.Item, "Update", Private.Dispatcher)
+	local item = Bagnon.ItemSlot or Bagnon.Item
+	local method = item.UpdatePrimary and "UpdatePrimary" or item.Update and "Update"
+	hooksecurefunc(item, method, Private.Dispatcher)
 end
 
 -- (Re)assign globals
