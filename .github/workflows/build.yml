@@ -20,12 +20,12 @@ jobs:
 
     steps:
 
-      - name: Clone project
+      - name: Checkout addon
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # gets git history for changelogs
 
-      - name: Package and release
-        uses: BigWigsMods/packager@v2
+      - name: Package
+        uses: BigWigsMods/packager@svn-action
         with:
           args: -m .pkgmeta
