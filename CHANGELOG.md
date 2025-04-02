@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.85-Release] 2025-04-02
+### Fixed
+- I might have missed a line in the previous update, and nobody told me. 
+
 ## [2.2.85-Release] 2025-03-08
 - Updated for WoW Classic Era Client Patch 1.15.6.
 - Updated for WoW Retail Client Patch 11.1.0.
