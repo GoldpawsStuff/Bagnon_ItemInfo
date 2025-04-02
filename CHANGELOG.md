@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.2.85-Release] 2025-04-02
+## [2.2.86-Release] 2025-04-02
 ### Fixed
 - I might have missed a line in the previous update, and nobody told me. 
 
