@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.87-Release] 2025-06-18
+- Updated for Retail client patch 11.1.7.
+- Updated for Classic Era client patch 1.15.7.
+
 ## [2.2.86-Release] 2025-04-02
 ### Fixed
 - I might have missed a line in the previous update, and nobody told me. 
