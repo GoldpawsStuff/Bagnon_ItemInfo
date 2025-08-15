@@ -160,7 +160,7 @@ local optionDB = {
 			hidden = function(info) return not BagnonItemInfo_DB.enableGarbage or not BagnonItemInfo_DB.garbageOverlay end,
 			set = setter,
 			get = getter
-		},
+		}--[[,
 		enableUncollected = {
 			order = 50,
 			name = L["Show uncollected appearances"],
@@ -171,7 +171,7 @@ local optionDB = {
 			hidden = function(info) return not Private.IsRetail end,
 			set = setter,
 			get = getter
-		}
+		}--]]
 	}
 }
 

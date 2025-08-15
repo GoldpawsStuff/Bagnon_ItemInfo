@@ -1,4 +1,4 @@
-## Interface: 110107
+## Interface: 110107, 50500, 11507
 ## IconTexture: Interface\Addons\BagBrother\Art\Bagnon-Plugin.tga
 
 ## Plain Title: Bagnon ItemLevel Plus
@@ -12,8 +12,8 @@
 ## X-Wago-ID: pkNMBO6z
 ## X-License: Custom
 
-## OptionalDeps: TaintLess
-## RequiredDeps: Bagnon
+## OptionalDeps: TaintLess, Bagnon, Bagnonium
+## RequiredDeps: BagBrother
 ## SavedVariables: BagnonItemInfo_DB
 
 # Libraries
@@ -31,4 +31,4 @@ Main.lua
 Modules\Garbage.lua
 Modules\Itembind.lua
 Modules\Itemlevel.lua
-Modules\Uncollected.lua
+#Modules\Uncollected.lua

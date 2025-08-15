@@ -24,6 +24,7 @@
 
 --]]
 local Addon, Private =  ...
+local Bagnon = Bagnon or Bagnonium
 local Module = Bagnon:NewModule("Bagnon_BoE")
 local cache = {}
 

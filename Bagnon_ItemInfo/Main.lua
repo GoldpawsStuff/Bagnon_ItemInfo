@@ -28,4 +28,5 @@ if (Private.Incompatible) then
 	return
 end
 
-local Module = Bagnon:NewModule(Addon, Private, "WildAddon-1.0")
+local Bagnon = Bagnon or Bagnonium
+local Module = Bagnon:NewModule(Addon, Private)

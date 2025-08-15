@@ -23,7 +23,9 @@
 	SOFTWARE.
 
 --]]
+do return end
 local Addon, Private =  ...
+local Bagnon = Bagnon or Bagnonium
 local Module = Bagnon:NewModule("Bagnon_Uncollected")
 local cache = {}
 

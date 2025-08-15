@@ -24,6 +24,7 @@
 
 --]]
 local Addon, Private =  ...
+local Bagnon = Bagnon or Bagnonium
 local Module = Bagnon:NewModule("Bagnon_ItemLevel")
 
 local Cache = LibStub("LibItemCache-2.0", true)
@@ -39,8 +40,10 @@ local string_match = string.match
 local tonumber = tonumber
 
 -- WoW API
-local C_TooltipInfo, TooltipUtil = C_TooltipInfo, TooltipUtil
-local CreateFrame, GetItemInfoInstant, GetItemQualityColor = CreateFrame, GetItemInfoInstant, GetItemQualityColor
+local C_Item, C_TooltipInfo, TooltipUtil = C_Item, C_TooltipInfo, TooltipUtil
+local CreateFrame, GetItemQualityColor = CreateFrame, GetItemQualityColor
+local GetItemInfo = C_Item.GetItemInfo or GetItemInfo
+local GetItemInfoInstant = C_Item.GetItemInfoInstant or GetItemInfoInstant
 
 local retail = Private.IsRetail
 local tooltip = Private.tooltip
@@ -97,19 +100,15 @@ Private.AddUpdater(Module, function(self)
 			if (db.enableRarityColoring) then
 				color = quality and colors[quality]
 			end
-			-- Update the bagnon cache
-			if (not level and not self.info.link) then
-				self.info.link = Container.GetContainerItemLink(self:GetBag(), self:GetID())
-				if (Cache) then
-					self.info = Cache:RestoreItemData(self.info)
-				end
-				level = self.info.level
+			if (not level) then
+				--local itemName, itemLink, itemQuality, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, sellPrice, classID, subclassID, bindType, expansionID, setID, isCraftingReagent = GetItemInfo(itemInfo)
+				_, _, _, level = GetItemInfo(self.info.hyperlink)
+				self.info.level = level
 			end
 			message = level
 		end
 
-		-- Only retail tooltips contain iteminfo,
-		-- but only retail tooltips need it.
+		-- Parse itemlevel in retail, and bag slots.
 		if (retail) and (isgear or isbag) then
 
 			if (retail) then
