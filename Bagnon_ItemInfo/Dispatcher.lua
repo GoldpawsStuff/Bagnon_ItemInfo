@@ -39,6 +39,7 @@ Private.IsTBC = (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
 Private.IsWrath = (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC)
 Private.IsShadowlands = Private.ClientMajor == 9
 Private.IsDragonflight = Private.ClientMajor == 10
+Private.IsMidnight = Private.ClientMajor == 12
 
 -- Speed!
 local next, table_insert = next, table.insert
