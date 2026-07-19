@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.93-Release] 2026-07-19
+- Updated toc version for WoW Retail Client Patch 12.0.7.
+- Updated toc version for WoW Classic Client Patch 5.5.4.
+- Updated toc version for WoW Classic Era Client Patch 1.15.8.
+
 ## [2.2.92-Release] 2026-04-22
 - Updated toc version for WoW Retail Client Patch 12.0.5.
 
