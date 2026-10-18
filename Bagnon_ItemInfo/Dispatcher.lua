@@ -41,6 +41,11 @@ Private.IsShadowlands = Private.ClientMajor == 9
 Private.IsDragonflight = Private.ClientMajor == 10
 Private.IsMidnight = Private.ClientMajor == 12
 
+local buildVersion, buildNumber, buildDate, interfaceVersion = GetBuildInfo()
+Private.WoWBuild = tonumber(buildNumber) -- numerical build number for pure larger than/smaller than comparisons
+Private.WoWVersion = interfaceVersion -- patch version as string for display purposes
+Private.IsForever = Private.WoWVersion >= 16000 and Private.WoWVersion < 20000
+
 -- Speed!
 local next, table_insert = next, table.insert
 local tooltip, updates = Private.tooltip, Private.updates

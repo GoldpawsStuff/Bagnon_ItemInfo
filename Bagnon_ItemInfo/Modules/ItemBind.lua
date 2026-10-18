@@ -35,7 +35,7 @@ local string_find = string.find
 
 -- WoW API
 local C_Container, C_TooltipInfo, TooltipUtil = C_Container, C_TooltipInfo, TooltipUtil
-local CreateFrame, GetItemInfo, GetItemQualityColor = CreateFrame, GetItemInfo, GetItemQualityColor
+local CreateFrame, GetItemInfo, GetItemQualityColor = CreateFrame, C_Item.GetItemInfo, C_Item.GetItemQualityColor
 
 -- Addon cache
 local retail = Private.IsRetail
@@ -71,12 +71,13 @@ local colors = {
 	[7] = { 79/255, 196/255, 225/255 }, -- Heirloom
 	[8] = { 79/255, 196/255, 225/255 } -- Blizzard
 }
-for i = 0, (retail and Enum.ItemQualityMeta.NumValues or NUM_LE_ITEM_QUALITYS) - 1 do
-	if (not colors[i]) then
-		local r, g, b = GetItemQualityColor(i)
-		colors[i] = { r, g, b }
-	end
-end
+
+--for i = 0, (retail and Enum.ItemQualityMeta.NumValues or NUM_LE_ITEM_QUALITYS) - 1 do
+--	if (not colors[i]) then
+--		local r, g, b = GetItemQualityColor(i)
+--		colors[i] = { r, g, b }
+--	end
+--end
 
 Private.cache[Module] = cache
 Private.AddUpdater(Module, function(self)
