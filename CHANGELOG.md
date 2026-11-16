@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.96-Release] 2026-11-16
+- Updated toc version for WoW Retail Client Patch 12.1.7.
+
 ## [2.2.95-Release] 2026-10-18
 - Added support for WoW Forever 1.16.0.
 - Added support for WoW TBC Anniversary 2.5.6.
