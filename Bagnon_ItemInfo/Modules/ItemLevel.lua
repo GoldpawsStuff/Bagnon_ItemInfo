@@ -45,7 +45,7 @@ local CreateFrame, GetItemQualityColor = CreateFrame, C_Item.GetItemQualityColor
 local GetItemInfo = C_Item.GetItemInfo
 local GetItemInfoInstant = C_Item.GetItemInfoInstant
 
-local retail = Private.IsRetail
+local retail = Private.IsRetail or Private.IsForever
 local tooltip = Private.tooltip
 local tooltipName = Private.tooltipName
 local battlepetclass = Enum.ItemClass.Battlepet

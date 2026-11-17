@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.97-Release] 2026-11-17
+- Updated client flags to work with WoW Forever. 
+
 ## [2.2.96-Release] 2026-11-16
 - Updated toc version for WoW Retail Client Patch 12.1.7.
 

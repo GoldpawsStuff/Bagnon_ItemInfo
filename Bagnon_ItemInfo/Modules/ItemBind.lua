@@ -38,7 +38,7 @@ local C_Container, C_TooltipInfo, TooltipUtil = C_Container, C_TooltipInfo, Tool
 local CreateFrame, GetItemInfo, GetItemQualityColor = CreateFrame, C_Item.GetItemInfo, C_Item.GetItemQualityColor
 
 -- Addon cache
-local retail = Private.IsRetail
+local retail = Private.IsRetail or Private.IsForever
 local wrath = Private.IsWrath
 local tooltip = Private.tooltip
 local tooltipName = Private.tooltipName

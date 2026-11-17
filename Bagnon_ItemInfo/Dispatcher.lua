@@ -34,6 +34,7 @@ Private.tooltipName = Private.tooltip:GetName()
 
 Private.ClientMajor = tonumber((string.split(".", (GetBuildInfo()))))
 Private.IsRetail = (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE)
+Private.IsForever = (WOW_PROJECT_ID == WOW_PROJECT_CAMELOT) 
 Private.IsClassic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
 Private.IsTBC = (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
 Private.IsWrath = (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC)
@@ -44,7 +45,6 @@ Private.IsMidnight = Private.ClientMajor == 12
 local buildVersion, buildNumber, buildDate, interfaceVersion = GetBuildInfo()
 Private.WoWBuild = tonumber(buildNumber) -- numerical build number for pure larger than/smaller than comparisons
 Private.WoWVersion = interfaceVersion -- patch version as string for display purposes
-Private.IsForever = Private.WoWVersion >= 16000 and Private.WoWVersion < 20000
 
 -- Speed!
 local next, table_insert = next, table.insert
